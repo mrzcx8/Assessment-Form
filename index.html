@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Performance Assessment Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+        }
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .section {
+            margin-bottom: 20px;
+            display: none; /* Hide all sections by default */
+        }
+        .section.active {
+            display: block; /* Show the active section */
+        }
+        .section h2 {
+            margin-bottom: 10px;
+            color: #4CAF50;
+        }
+        .question {
+            margin-bottom: 15px;
+        }
+        .question label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .question input[type="number"], .question textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .total {
+            font-weight: bold;
+            margin-top: 20px;
+            text-align: center;
+        }
+        .signature-container {
+            margin-top: 20px;
+        }
+        .signature-container label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        canvas {
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background: #f9f9f9;
+        }
+        button {
+            padding: 10px 20px;
+            background: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Performance Assessment Form</h1>
+
+    <div class="form-container">
+        <!-- Bahagian 1: Trial Management and Coordination -->
+        <div class="section active" id="section1">
+            <h2>1. Trial Management and Coordination</h2>
+
+            <!-- Protocol Adherence -->
+            <div class="question">
+                <label for="protocolAdherence">a. Protocol Adherence (Rate from 1 to 5):</label>
+                <input type="number" id="protocolAdherence" min="1" max="5" onchange="calculateTotal()">
+                <label for="protocolAdherenceComment">Comments:</label>
+                <textarea id="protocolAdherenceComment" rows="3"></textarea>
+            </div>
+
+            <!-- Timely Communication with Stakeholders -->
+            <div class="question">
+                <label for="timelyCommunication">b. Timely Communication with Stakeholders (Rate from 1 to 5):</label>
+                <input type="number" id="timelyCommunication" min="1" max="5" onchange="calculateTotal()">
+                <label for="timelyCommunicationComment">Comments:</label>
+                <textarea id="timelyCommunicationComment" rows="3"></textarea>
+            </div>
+
+            <!-- Meeting Project Milestones -->
+            <div class="question">
+                <label for="meetingMilestones">c. Meeting Project Milestones (Rate from 1 to 5):</label>
+                <input type="number" id="meetingMilestones" min="1" max="5" onchange="calculateTotal()">
+                <label for="meetingMilestonesComment">Comments:</label>
+                <textarea id="meetingMilestonesComment" rows="3"></textarea>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="navigation-buttons">
+                <button onclick="prevSection()" disabled>Previous</button>
+                <button onclick="nextSection()">Next</button>
+            </div>
+        </div>
+
+        <!-- Bahagian 2: Subject Recruitment -->
+        <div class="section" id="section2">
+            <h2>2. Subject Recruitment</h2>
+
+            <!-- Pre-Screening and Recruitment Efficiency -->
+            <div class="question">
+                <label for="preScreening">a. Pre-Screening and Recruitment Efficiency (Rate from 1 to 5):</label>
+                <input type="number" id="preScreening" min="1" max="5" onchange="calculateTotal()">
+                <label for="preScreeningComment">Comments:</label>
+                <textarea id="preScreeningComment" rows="3"></textarea>
+            </div>
+
+            <!-- Informed Consent Process -->
+            <div class="question">
+                <label for="informedConsent">b. Informed Consent Process (Rate from 1 to 5):</label>
+                <input type="number" id="informedConsent" min="1" max="5" onchange="calculateTotal()">
+                <label for="informedConsentComment">Comments:</label>
+                <textarea id="informedConsentComment" rows="3"></textarea>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="navigation-buttons">
+                <button onclick="prevSection()">Previous</button>
+                <button onclick="nextSection()">Next</button>
+            </div>
+        </div>
+
+        <!-- Bahagian 3: Data Collection and Documentation -->
+        <div class="section" id="section3">
+            <h2>3. Data Collection and Documentation</h2>
+
+            <!-- Accuracy of Data Entry -->
+            <div class="question">
+                <label for="dataAccuracy">a. Accuracy of Data Entry (Rate from 1 to 5):</label>
+                <input type="number" id="dataAccuracy" min="1" max="5" onchange="calculateTotal()">
+                <label for="dataAccuracyComment">Comments:</label>
+                <textarea id="dataAccuracyComment" rows="3"></textarea>
+            </div>
+
+            <!-- Timeliness of Data Submission and Queries Resolution -->
+            <div class="question">
+                <label for="dataTimeliness">b. Timeliness of Data Submission and Queries Resolution (Rate from 1 to 5):</label>
+                <input type="number" id="dataTimeliness" min="1" max="5" onchange="calculateTotal()">
+                <label for="dataTimelinessComment">Comments:</label>
+                <textarea id="dataTimelinessComment" rows="3"></textarea>
+            </div>
+
+            <!-- Reporting Adverse Events and Protocol Deviations -->
+            <div class="question">
+                <label for="adverseEvents">c. Reporting Adverse Events and Protocol Deviations (Rate from 1 to 5):</label>
+                <input type="number" id="adverseEvents" min="1" max="5" onchange="calculateTotal()">
+                <label for="adverseEventsComment">Comments:</label>
+                <textarea id="adverseEventsComment" rows="3"></textarea>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="navigation-buttons">
+                <button onclick="prevSection()">Previous</button>
+                <button onclick="nextSection()">Next</button>
+            </div>
+        </div>
+
+        <!-- Bahagian 4: Regulatory Compliance and Ethics -->
+        <div class="section" id="section4">
+            <h2>4. Regulatory Compliance and Ethics</h2>
+
+            <!-- Regulatory Document and Site File Maintenance -->
+            <div class="question">
+                <label for="regulatoryDocuments">a. Regulatory Document and Site File Maintenance (Rate from 1 to 5):</label>
+                <input type="number" id="regulatoryDocuments" min="1" max="5" onchange="calculateTotal()">
+                <label for="regulatoryDocumentsComment">Comments:</label>
+                <textarea id="regulatoryDocumentsComment" rows="3"></textarea>
+            </div>
+
+            <!-- Compliance with GCP and Ethics Requirements -->
+            <div class="question">
+                <label for="gcpCompliance">b. Compliance with GCP and Ethics Requirements (Rate from 1 to 5):</label>
+                <input type="number" id="gcpCompliance" min="1" max="5" onchange="calculateTotal()">
+                <label for="gcpComplianceComment">Comments:</label>
+                <textarea id="gcpComplianceComment" rows="3"></textarea>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="navigation-buttons">
+                <button onclick="prevSection()">Previous</button>
+                <button onclick="nextSection()">Next</button>
+            </div>
+        </div>
+
+        <!-- Bahagian 5: Study Visit Coordination -->
+        <div class="section" id="section5">
+            <h2>5. Study Visit Coordination</h2>
+
+            <!-- Scheduling and Planning of Visits -->
+            <div class="question">
+                <label for="schedulingVisits">a. Scheduling and Planning of Visits (Rate from 1 to 5):</label>
+                <input type="number" id="schedulingVisits" min="1" max="5" onchange="calculateTotal()">
+                <label for="schedulingVisitsComment">Comments:</label>
+                <textarea id="schedulingVisitsComment" rows="3"></textarea>
+            </div>
+
+            <!-- Conducting Study Visits -->
+            <div class="question">
+                <label for="conductingVisits">b. Conducting Study Visits (Rate from 1 to 5):</label>
+                <input type="number" id="conductingVisits" min="1" max="5" onchange="calculateTotal()">
+                <label for="conductingVisitsComment">Comments:</label>
+                <textarea id="conductingVisitsComment" rows="3"></textarea>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="navigation-buttons">
+                <button onclick="prevSection()">Previous</button>
+                <button onclick="nextSection()">Next</button>
+            </div>
+        </div>
+
+        <!-- Bahagian 6: Team Collaboration and Communication -->
+        <div class="section" id="section6">
+            <h2>6. Team Collaboration and Communication</h2>
+
+            <!-- Teamwork and Communication -->
+            <div class="question">
+                <label for="teamwork">a. Teamwork and Communication (Rate from 1 to 5):</label>
+                <input type="number" id="teamwork" min="1" max="5" onchange="calculateTotal()">
+                <label for="teamworkComment">Comments:</label>
+                <textarea id="teamworkComment" rows="3"></textarea>
+            </div>
+
+            <!-- Support of Study Staff -->
+            <div class="question">
+                <label for="supportStaff">b. Support of Study Staff (Rate from 1 to 5):</label>
+                <input type="number" id="supportStaff" min="1" max="5" onchange="calculateTotal()">
+                <label for="supportStaffComment">Comments:</label>
+                <textarea id="supportStaffComment" rows="3"></textarea>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="navigation-buttons">
+                <button onclick="prevSection()">Previous</button>
+                <button onclick="nextSection()">Next</button>
+            </div>
+        </div>
+
+        <!-- Grand Total Display -->
+        <div class="section" id="section7">
+            <h2>Grand Total</h2>
+            <div class="total">
+                <h2>Grand Total: <span id="grandTotal">0</span>/70</h2>
+                <p>*The passing score is 42 marks out of 70 (60.0%).</p>
+            </div>
+
+            <!-- Strengths and Areas for Improvement -->
+            <div class="section">
+                <h2>Overall Performance</h2>
+
+                <!-- Strengths -->
+                <div class="question">
+                    <label for="strengths">a. Strengths:</label>
+                    <textarea id="strengths" rows="3"></textarea>
+                </div>
+
+                <!-- Areas for Improvement -->
+                <div class="question">
+                    <label for="areasForImprovement">b. Areas for Improvement:</label>
+                    <textarea id="areasForImprovement" rows="3"></textarea>
+                </div>
+            </div>
+
+            <!-- Signature Section -->
+            <div class="signature-container">
+                <label for="signature">Signature:</label>
+                <canvas id="signatureCanvas" width="400" height="200"></canvas>
+                <button onclick="clearSignature()">Clear Signature</button>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="navigation-buttons">
+                <button onclick="prevSection()">Previous</button>
+                <button onclick="submitForm()">Submit Form</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSection = 1;
+
+        // Function to show the current section and hide others
+        function showSection(sectionNumber) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(`section${sectionNumber}`).classList.add('active');
+        }
+
+        // Function to go to the next section
+        function nextSection() {
+            if (currentSection < 7) {
+                currentSection++;
+                showSection(currentSection);
+            }
+        }
+
+        // Function to go to the previous section
+        function prevSection() {
+            if (currentSection > 1) {
+                currentSection--;
+                showSection(currentSection);
+            }
+        }
+
+        // Function to calculate Grand Total
+        function calculateTotal() {
+            const protocolAdherence = parseInt(document.getElementById('protocolAdherence').value) || 0;
+            const timelyCommunication = parseInt(document.getElementById('timelyCommunication').value) || 0;
+            const meetingMilestones = parseInt(document.getElementById('meetingMilestones').value) || 0;
+            const preScreening = parseInt(document.getElementById('preScreening').value) || 0;
+            const informedConsent = parseInt(document.getElementById('informedConsent').value) || 0;
+            const dataAccuracy = parseInt(document.getElementById('dataAccuracy').value) || 0;
+            const dataTimeliness = parseInt(document.getElementById('dataTimeliness').value) || 0;
+            const adverseEvents = parseInt(document.getElementById('adverseEvents').value) || 0;
+            const regulatoryDocuments = parseInt(document.getElementById('regulatoryDocuments').value) || 0;
+            const gcpCompliance = parseInt(document.getElementById('gcpCompliance').value) || 0;
+            const schedulingVisits = parseInt(document.getElementById('schedulingVisits').value) || 0;
+            const conductingVisits = parseInt(document.getElementById('conductingVisits').value) || 0;
+            const teamwork = parseInt(document.getElementById('teamwork').value) || 0;
+            const supportStaff = parseInt(document.getElementById('supportStaff').value) || 0;
+
+            const grandTotal = protocolAdherence + timelyCommunication + meetingMilestones + preScreening + informedConsent + dataAccuracy + dataTimeliness + adverseEvents + regulatoryDocuments + gcpCompliance + schedulingVisits + conductingVisits + teamwork + supportStaff;
+            document.getElementById('grandTotal').textContent = grandTotal;
+        }
+
+        // Signature Canvas
+        const canvas = document.getElementById('signatureCanvas');
+        const ctx = canvas.getContext('2d');
+        let isDrawing = false;
+
+        canvas.addEventListener('mousedown', () => isDrawing = true);
+        canvas.addEventListener('mouseup', () => isDrawing = false);
+        canvas.addEventListener('mousemove', draw);
+
+        function draw(event) {
+            if (!isDrawing) return;
+            ctx.lineWidth = 2;
+            ctx.lineCap = 'round';
+            ctx.strokeStyle = '#000';
+
+            ctx.lineTo(event.offsetX, event.offsetY);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(event.offsetX, event.offsetY);
+        }
+
+        function clearSignature() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        // Function to submit form data to Google Sheets
+        function submitForm() {
+            const protocolAdherence = document.getElementById('protocolAdherence').value;
+            const timelyCommunication = document.getElementById('timelyCommunication').value;
+            const meetingMilestones = document.getElementById('meetingMilestones').value;
+            const preScreening = document.getElementById('preScreening').value;
+            const informedConsent = document.getElementById('informedConsent').value;
+            const dataAccuracy = document.getElementById('dataAccuracy').value;
+            const dataTimeliness = document.getElementById('dataTimeliness').value;
+            const adverseEvents = document.getElementById('adverseEvents').value;
+            const regulatoryDocuments = document.getElementById('regulatoryDocuments').value;
+            const gcpCompliance = document.getElementById('gcpCompliance').value;
+            const schedulingVisits = document.getElementById('schedulingVisits').value;
+            const conductingVisits = document.getElementById('conductingVisits').value;
+            const teamwork = document.getElementById('teamwork').value;
+            const supportStaff = document.getElementById('supportStaff').value;
+            const grandTotal = document.getElementById('grandTotal').textContent;
+            const strengths = document.getElementById('strengths').value;
+            const areasForImprovement = document.getElementById('areasForImprovement').value;
+            const signature = canvas.toDataURL(); // Convert canvas to base64 image
+
+            const formData = {
+                protocolAdherence,
+                timelyCommunication,
+                meetingMilestones,
+                preScreening,
+                informedConsent,
+                dataAccuracy,
+                dataTimeliness,
+                adverseEvents,
+                regulatoryDocuments,
+                gcpCompliance,
+                schedulingVisits,
+                conductingVisits,
+                teamwork,
+                supportStaff,
+                grandTotal,
+                strengths,
+                areasForImprovement,
+                signature
+            };
+
+            // Replace with your Google Apps Script URL
+            const googleScriptUrl = 'https://script.google.com/macros/s/AKfycbw1STOjAqfmwzmPRjIWeubd-3ctkIAUs9DTcPWbOWBGUIr6mD3Tk9k_KLdayqPuxrRZBw/exec';
+
+            fetch(googleScriptUrl, {
+                method: 'POST',
+                body: JSON.stringify(formData),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.text())
+            .then(data => {
+                alert('Form submitted successfully!');
+                clearForm();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Form submission failed. Please try again.');
+            });
+        }
+
+        // Function to clear the form
+        function clearForm() {
+            document.getElementById('protocolAdherence').value = '';
+            document.getElementById('timelyCommunication').value = '';
+            document.getElementById('meetingMilestones').value = '';
+            document.getElementById('preScreening').value = '';
+            document.getElementById('informedConsent').value = '';
+            document.getElementById('dataAccuracy').value = '';
+            document.getElementById('dataTimeliness').value = '';
+            document.getElementById('adverseEvents').value = '';
+            document.getElementById('regulatoryDocuments').value = '';
+            document.getElementById('gcpCompliance').value = '';
+            document.getElementById('schedulingVisits').value = '';
+            document.getElementById('conductingVisits').value = '';
+            document.getElementById('teamwork').value = '';
+            document.getElementById('supportStaff').value = '';
+            document.getElementById('grandTotal').textContent = '0';
+            document.getElementById('strengths').value = '';
+            document.getElementById('areasForImprovement').value = '';
+            clearSignature();
+        }
+    </script>
+
+</body>
+</html>
