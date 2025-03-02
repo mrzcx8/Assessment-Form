@@ -859,8 +859,14 @@
                 data[key] = value;
             });
 
+            // Convert canvas to image
+            const image = canvas.toDataURL(); // Convert canvas to base64 image
+            data.signature = image;
+
+            console.log(data); // Debugging: Lihat data yang dihantar
+
             // Kirim data ke Google Sheets menggunakan Google Apps Script
-            fetch('https://script.google.com/macros/s/AKfycbxRADfAsUfArvGk3fiUTlwQsiZwxeIQD54opdRAasUwhomJLXo5_r6VThMe0VdO7lEu/exec', {
+            fetch('https://script.google.com/macros/s/AKfycbyxMkVI3zQXCbCFSTlXnPKQlusJBb00Oos_nJ8C631JSp8ojlWZm52_kRiG9BBtNIDFoQ/exec', {
                 method: 'POST',
                 body: JSON.stringify(data),
                 headers: {
