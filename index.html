@@ -1,890 +1,175 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EVOS Service Provider Performance Assessment Form</title>
-    <style>
-        /* CSS Anda tetap sama */
-        :root {
-            --primary-color: #3498db;
-            --secondary-color: #2980b9;
-            --success-color: #2ecc71;
-            --danger-color: #e74c3c;
-            --light-gray: #f4f6f8;
-            --dark-gray: #34495e;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background-color: var(--light-gray);
-            color: var(--dark-gray);
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            margin-top: 20px;
-            margin-bottom: 20px;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #eee;
-        }
-
-        h1 {
-            color: var(--primary-color);
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-
-        h2 {
-            color: var(--secondary-color);
-            font-size: 20px;
-            margin: 20px 0 10px;
-            padding-bottom: 5px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .instructions {
-            background-color: #f8f9fa;
-            padding: 10px;
-            border-radius: 5px;
-            font-style: italic;
-            margin-bottom: 20px;
-            font-size: 14px;
-        }
-
-        .form-section {
-            margin-bottom: 30px;
-            display: none;
-        }
-
-        .form-section.active {
-            display: block;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-
-        input[type="text"],
-        input[type="date"],
-        input[type="email"],
-        textarea,
-        select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 16px;
-        }
-
-        .radio-group {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 10px;
-            flex-wrap: wrap;
-        }
-
-        .radio-option {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 10px;
-            width: 18%;
-        }
-
-        .radio-option input {
-            margin-bottom: 5px;
-        }
-
-        textarea {
-            min-height: 80px;
-            resize: vertical;
-        }
-
-        .rating-info {
-            background-color: #f0f8ff;
-            padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            font-size: 14px;
-        }
-
-        .rating-info p {
-            margin-bottom: 5px;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .btn:hover {
-            background-color: var(--secondary-color);
-        }
-
-        .btn-container {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-        }
-
-        .btn-next {
-            margin-left: auto;
-        }
-
-        .btn-prev {
-            background-color: #95a5a6;
-        }
-
-        .btn-prev:hover {
-            background-color: #7f8c8d;
-        }
-
-        .btn-submit {
-            background-color: var(--success-color);
-        }
-
-        .btn-submit:hover {
-            background-color: #27ae60;
-        }
-
-        .signature-container {
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            padding: 10px;
-            margin-bottom: 20px;
-        }
-
-        #signatureCanvas {
-            border: 1px dashed #aaa;
-            width: 100%;
-            height: 150px;
-            cursor: crosshair;
-        }
-
-        .signature-actions {
-            display: flex;
-            justify-content: flex-end;
-            margin-top: 10px;
-            gap: 10px;
-        }
-
-        .signature-clear {
-            background-color: var(--danger-color);
-        }
-
-        .signature-clear:hover {
-            background-color: #c0392b;
-        }
-
-        .progress-bar {
-            margin-bottom: 20px;
-            background-color: #eee;
-            border-radius: 4px;
-            height: 10px;
-            overflow: hidden;
-        }
-
-        .progress {
-            height: 100%;
-            background-color: var(--primary-color);
-            transition: width 0.3s ease;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 15px;
-            }
-
-            .radio-group {
-                flex-direction: column;
-            }
-
-            .radio-option {
-                width: 100%;
-                flex-direction: row;
-                justify-content: space-between;
-                padding: 5px 0;
-            }
-        }
-    </style>
+  <title>EVOS Service Provider Performance Assessment Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    form {
+      max-width: 800px;
+      margin: auto;
+    }
+    .section {
+      margin-bottom: 20px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .section h3 {
+      margin-top: 0;
+    }
+    label {
+      display: block;
+      margin: 10px 0 5px;
+    }
+    input[type="text"],
+    input[type="date"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>EVOS Service Provider (Study Coordinator) Performance Assessment Form</h1>
-            <div class="instructions">
-                <p>Instruction to Assessor: Performance evaluation shall be conducted on a monthly basis, and scoring must be finalised by the end of 3rd week of each month.</p>
-            </div>
-            <div class="progress-bar">
-                <div class="progress" id="progressBar" style="width: 0%"></div>
-            </div>
-        </header>
-
-        <form id="assessmentForm">
-            <!-- Section 0: Basic Information -->
-            <div class="form-section active" id="section0">
-                <h2>Basic Information</h2>
-
-                <div class="form-group">
-                    <label for="coordinatorName">1. Coordinator's Name</label>
-                    <input type="text" id="coordinatorName" name="coordinatorName" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="assessmentDate">2. Assessment Date</label>
-                    <input type="date" id="assessmentDate" name="assessmentDate" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="assessorName">3. Assessor's Name</label>
-                    <input type="text" id="assessorName" name="assessorName" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="trialSite">4. Trial Site</label>
-                    <select id="trialSite" name="trialSite" required>
-                        <option value="">-- Select Trial Site --</option>
-                        <option value="Hospital Pulau Pinang">Hospital Pulau Pinang</option>
-                        <option value="Hospital Tuanku Jaafar">Hospital Tuanku Jaafar</option>
-                        <option value="Hospital Sultanah Bahiyah">Hospital Sultanah Bahiyah</option>
-                        <option value="Hospital Sultan Abdul Halim">Hospital Sultan Abdul Halim</option>
-                        <option value="Hospital Selayang">Hospital Selayang</option>
-                        <option value="Hospital Ampang">Hospital Ampang</option>
-                    </select>
-                </div>
-
-                <div class="rating-info">
-                    <h3>Rating Score:</h3>
-                    <p><strong>1</strong> - All deliverables not meeting the timeline as per target / More than 1 negative feedback</p>
-                    <p><strong>2</strong> - Some deliverables not meeting the timeline as per target / overall neutral feedback with more than 1 negative feedback</p>
-                    <p><strong>3</strong> - All deliverables meeting the timeline as per target / overall good feedback with not more than 1 negative feedback</p>
-                    <p><strong>4</strong> - All deliverables meeting the timeline as per target and some even exceeded the expectations. Issue handling and resolutions beyond the level of competency / Positive feedback with occasional compliment.</p>
-                    <p><strong>5</strong> - Most deliverables achieved far beyond the expectation and more effort from the individual to improve the overall project level milestones. Able to handle issues independently with good resolution outcome. / Positive feedback with frequent compliments</p>
-                </div>
-
-                <div class="btn-container">
-                    <button type="button" class="btn btn-next" onclick="nextSection(0)">Next</button>
-                </div>
-            </div>
-
-            <!-- Section 1: Trial Management and Coordination -->
-            <div class="form-section" id="section1">
-                <h2>Section 1: Trial Management and Coordination</h2>
-
-                <div class="form-group">
-                    <label>Protocol Adherence: Ensures all aspects of the study are conducted as per the approved protocol.</label>
-                    <div class="radio-group">
-                        <div class="radio-option">
-                            <input type="radio" id="protocol1" name="protocolAdherence" value="1" required onclick="updateTotal()">
-                            <label for="protocol1">1</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="protocol2" name="protocolAdherence" value="2" onclick="updateTotal()">
-                            <label for="protocol2">2</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="protocol3" name="protocolAdherence" value="3" onclick="updateTotal()">
-                            <label for="protocol3">3</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="protocol4" name="protocolAdherence" value="4" onclick="updateTotal()">
-                            <label for="protocol4">4</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="protocol5" name="protocolAdherence" value="5" onclick="updateTotal()">
-                            <label for="protocol5">5</label>
-                        </div>
-                    </div>
-                    <textarea id="protocolComment" name="protocolComment" placeholder="Comments"></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label>Timely Communication with Stakeholders: Effectively communicates with the principal investigator, CROs, and the study team to ensure smooth coordination.</label>
-                    <div class="radio-group">
-                        <div class="radio-option">
-                            <input type="radio" id="comm1" name="timelyCommunication" value="1" required onclick="updateTotal()">
-                            <label for="comm1">1</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="comm2" name="timelyCommunication" value="2" onclick="updateTotal()">
-                            <label for="comm2">2</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="comm3" name="timelyCommunication" value="3" onclick="updateTotal()">
-                            <label for="comm3">3</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="comm4" name="timelyCommunication" value="4" onclick="updateTotal()">
-                            <label for="comm4">4</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="comm5" name="timelyCommunication" value="5" onclick="updateTotal()">
-                            <label for="comm5">5</label>
-                        </div>
-                    </div>
-                    <textarea id="commComment" name="commComment" placeholder="Comments"></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label>Meeting Project Milestones: Ensures that key study milestones (e.g., recruitment targets, data submission) are met on time.</label>
-                    <div class="radio-group">
-                        <div class="radio-option">
-                            <input type="radio" id="milestone1" name="projectMilestones" value="1" required onclick="updateTotal()">
-                            <label for="milestone1">1</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="milestone2" name="projectMilestones" value="2" onclick="updateTotal()">
-                            <label for="milestone2">2</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="milestone3" name="projectMilestones" value="3" onclick="updateTotal()">
-                            <label for="milestone3">3</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="milestone4" name="projectMilestones" value="4" onclick="updateTotal()">
-                            <label for="milestone4">4</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="milestone5" name="projectMilestones" value="5" onclick="updateTotal()">
-                            <label for="milestone5">5</label>
-                        </div>
-                    </div>
-                    <textarea id="milestoneComment" name="milestoneComment" placeholder="Comments"></textarea>
-                </div>
-
-                <div class="btn-container">
-                    <button type="button" class="btn btn-prev" onclick="prevSection(1)">Previous</button>
-                    <button type="button" class="btn btn-next" onclick="nextSection(1)">Next</button>
-                </div>
-            </div>
-
-            <!-- Section 2: Subject Recruitment -->
-            <div class="form-section" id="section2">
-                <h2>Section 2: Subject Recruitment</h2>
-
-                <div class="form-group">
-                    <label>Pre-Screening and Recruitment Efficiency: Effectively pre-screen subjects as per eligibility criteria.</label>
-                    <div class="radio-group">
-                        <div class="radio-option">
-                            <input type="radio" id="screening1" name="preScreening" value="1" required onclick="updateTotal()">
-                            <label for="screening1">1</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="screening2" name="preScreening" value="2" onclick="updateTotal()">
-                            <label for="screening2">2</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="screening3" name="preScreening" value="3" onclick="updateTotal()">
-                            <label for="screening3">3</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="screening4" name="preScreening" value="4" onclick="updateTotal()">
-                            <label for="screening4">4</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="screening5" name="preScreening" value="5" onclick="updateTotal()">
-                            <label for="screening5">5</label>
-                        </div>
-                    </div>
-                    <textarea id="screeningComment" name="screeningComment" placeholder="Comments"></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label>Informed Consent Process: Effectively assist investigators to obtain informed consent from participants.</label>
-                    <div class="radio-group">
-                        <div class="radio-option">
-                            <input type="radio" id="consent1" name="informedConsent" value="1" required onclick="updateTotal()">
-                            <label for="consent1">1</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="consent2" name="informedConsent" value="2" onclick="updateTotal()">
-                            <label for="consent2">2</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="consent3" name="informedConsent" value="3" onclick="updateTotal()">
-                            <label for="consent3">3</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="consent4" name="informedConsent" value="4" onclick="updateTotal()">
-                            <label for="consent4">4</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="consent5" name="informedConsent" value="5" onclick="updateTotal()">
-                            <label for="consent5">5</label>
-                        </div>
-                    </div>
-                    <textarea id="consentComment" name="consentComment" placeholder="Comments"></textarea>
-                </div>
-
-                <div class="btn-container">
-                    <button type="button" class="btn btn-prev" onclick="prevSection(2)">Previous</button>
-                    <button type="button" class="btn btn-next" onclick="nextSection(2)">Next</button>
-                </div>
-            </div>
-
-            <!-- Section 3: Data Collection and Documentation -->
-            <div class="form-section" id="section3">
-                <h2>Section 3: Data Collection and Documentation</h2>
-
-                <div class="form-group">
-                    <label>Accuracy of Data Entry: Ensures accurate and complete data entry in Case Report Forms (CRFs) and REDCap databases.</label>
-                    <div class="radio-group">
-                        <div class="radio-option">
-                            <input type="radio" id="dataEntry1" name="dataAccuracy" value="1" required onclick="updateTotal()">
-                            <label for="dataEntry1">1</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="dataEntry2" name="dataAccuracy" value="2" onclick="updateTotal()">
-                            <label for="dataEntry2">2</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="dataEntry3" name="dataAccuracy" value="3" onclick="updateTotal()">
-                            <label for="dataEntry3">3</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="dataEntry4" name="dataAccuracy" value="4" onclick="updateTotal()">
-                            <label for="dataEntry4">4</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="dataEntry5" name="dataAccuracy" value="5" onclick="updateTotal()">
-                            <label for="dataEntry5">5</label>
-                        </div>
-                    </div>
-                    <textarea id="dataEntryComment" name="dataEntryComment" placeholder="Comments"></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label>Timeliness of Data Submission and Queries Resolution: Submits data and resolves data queries in a timely manner without delays.</label>
-                    <div class="radio-group">
-                        <div class="radio-option">
-                            <input type="radio" id="dataTimely1" name="dataTimeliness" value="1" required onclick="updateTotal()">
-                            <label for="dataTimely1">1</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="dataTimely2" name="dataTimeliness" value="2" onclick="updateTotal()">
-                            <label for="dataTimely2">2</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="dataTimely3" name="dataTimeliness" value="3" onclick="updateTotal()">
-                            <label for="dataTimely3">3</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="dataTimely4" name="dataTimeliness" value="4" onclick="updateTotal()">
-                            <label for="dataTimely4">4</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="dataTimely5" name="dataTimeliness" value="5" onclick="updateTotal()">
-                            <label for="dataTimely5">5</label>
-                        </div>
-                    </div>
-                    <textarea id="dataTimelyComment" name="dataTimelyComment" placeholder="Comments"></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label>Reporting Adverse Events and Protocol Deviations: Identifies and reports adverse events or protocol deviations promptly and appropriately.</label>
-                    <div class="radio-group">
-                        <div class="radio-option">
-                            <input type="radio" id="adverse1" name="adverseEvents" value="1" required onclick="updateTotal()">
-                            <label for="adverse1">1</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="adverse2" name="adverseEvents" value="2" onclick="updateTotal()">
-                            <label for="adverse2">2</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="adverse3" name="adverseEvents" value="3" onclick="updateTotal()">
-                            <label for="adverse3">3</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="adverse4" name="adverseEvents" value="4" onclick="updateTotal()">
-                            <label for="adverse4">4</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="adverse5" name="adverseEvents" value="5" onclick="updateTotal()">
-                            <label for="adverse5">5</label>
-                        </div>
-                    </div>
-                    <textarea id="adverseComment" name="adverseComment" placeholder="Comments"></textarea>
-                </div>
-
-                <div class="btn-container">
-                    <button type="button" class="btn btn-prev" onclick="prevSection(3)">Previous</button>
-                    <button type="button" class="btn btn-next" onclick="nextSection(3)">Next</button>
-                </div>
-            </div>
-
-            <!-- Section 4: Regulatory Compliance and Ethics -->
-            <div class="form-section" id="section4">
-                <h2>Section 4: Regulatory Compliance and Ethics</h2>
-
-                <div class="form-group">
-                    <label>Regulatory Document and Site File Maintenance: Keeps all regulatory documents and Site File updated and audit-ready.</label>
-                    <div class="radio-group">
-                        <div class="radio-option">
-                            <input type="radio" id="regulatory1" name="regulatoryDocs" value="1" required onclick="updateTotal()">
-                            <label for="regulatory1">1</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="regulatory2" name="regulatoryDocs" value="2" onclick="updateTotal()">
-                            <label for="regulatory2">2</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="regulatory3" name="regulatoryDocs" value="3" onclick="updateTotal()">
-                            <label for="regulatory3">3</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="regulatory4" name="regulatoryDocs" value="4" onclick="updateTotal()">
-                            <label for="regulatory4">4</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="regulatory5" name="regulatoryDocs" value="5" onclick="updateTotal()">
-                            <label for="regulatory5">5</label>
-                        </div>
-                    </div>
-                    <textarea id="regulatoryComment" name="regulatoryComment" placeholder="Comments"></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label>Compliance with GCP and Ethics Requirements: Adheres to Good Clinical Practice (GCP) guidelines and ethical standards.</label>
-                    <div class="radio-group">
-                        <div class="radio-option">
-                            <input type="radio" id="gcp1" name="gcpCompliance" value="1" required onclick="updateTotal()">
-                            <label for="gcp1">1</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="gcp2" name="gcpCompliance" value="2" onclick="updateTotal()">
-                            <label for="gcp2">2</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="gcp3" name="gcpCompliance" value="3" onclick="updateTotal()">
-                            <label for="gcp3">3</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="gcp4" name="gcpCompliance" value="4" onclick="updateTotal()">
-                            <label for="gcp4">4</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="gcp5" name="gcpCompliance" value="5" onclick="updateTotal()">
-                            <label for="gcp5">5</label>
-                        </div>
-                    </div>
-                    <textarea id="gcpComment" name="gcpComment" placeholder="Comments"></textarea>
-                </div>
-
-                <div class="btn-container">
-                    <button type="button" class="btn btn-prev" onclick="prevSection(4)">Previous</button>
-                    <button type="button" class="btn btn-next" onclick="nextSection(4)">Next</button>
-                </div>
-            </div>
-
-            <!-- Section 5: Study Visit Coordination -->
-            <div class="form-section" id="section5">
-                <h2>Section 5: Study Visit Coordination</h2>
-
-                <div class="form-group">
-                    <label>Scheduling and Planning of Visits: Effectively schedules participant visits and ensures they follow the study timeline.</label>
-                    <div class="radio-group">
-                        <div class="radio-option">
-                            <input type="radio" id="scheduling1" name="visitScheduling" value="1" required onclick="updateTotal()">
-                            <label for="scheduling1">1</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="scheduling2" name="visitScheduling" value="2" onclick="updateTotal()">
-                            <label for="scheduling2">2</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="scheduling3" name="visitScheduling" value="3" onclick="updateTotal()">
-                            <label for="scheduling3">3</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="scheduling4" name="visitScheduling" value="4" onclick="updateTotal()">
-                            <label for="scheduling4">4</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="scheduling5" name="visitScheduling" value="5" onclick="updateTotal()">
-                            <label for="scheduling5">5</label>
-                        </div>
-                    </div>
-                    <textarea id="schedulingComment" name="schedulingComment" placeholder="Comments"></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label>Conducting Study Visits: Efficiently assists investigators in study visits procedures (e.g., phone call interview) during study visits.</label>
-                    <div class="radio-group">
-                        <div class="radio-option">
-                            <input type="radio" id="conducting1" name="visitConducting" value="1" required onclick="updateTotal()">
-                            <label for="conducting1">1</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="conducting2" name="visitConducting" value="2" onclick="updateTotal()">
-                            <label for="conducting2">2</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="conducting3" name="visitConducting" value="3" onclick="updateTotal()">
-                            <label for="conducting3">3</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="conducting4" name="visitConducting" value="4" onclick="updateTotal()">
-                            <label for="conducting4">4</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="conducting5" name="visitConducting" value="5" onclick="updateTotal()">
-                            <label for="conducting5">5</label>
-                        </div>
-                    </div>
-                    <textarea id="conductingComment" name="conductingComment" placeholder="Comments"></textarea>
-                </div>
-
-                <div class="btn-container">
-                    <button type="button" class="btn btn-prev" onclick="prevSection(5)">Previous</button>
-                    <button type="button" class="btn btn-next" onclick="nextSection(5)">Next</button>
-                </div>
-            </div>
-
-            <!-- Section 6: Team Collaboration and Communication -->
-            <div class="form-section" id="section6">
-                <h2>Section 6: Team Collaboration and Communication</h2>
-
-                <div class="form-group">
-                    <label>Collaboration with Study Team: Works effectively with the study team to achieve study objectives.</label>
-                    <div class="radio-group">
-                        <div class="radio-option">
-                            <input type="radio" id="collab1" name="teamCollaboration" value="1" required onclick="updateTotal()">
-                            <label for="collab1">1</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="collab2" name="teamCollaboration" value="2" onclick="updateTotal()">
-                            <label for="collab2">2</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="collab3" name="teamCollaboration" value="3" onclick="updateTotal()">
-                            <label for="collab3">3</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="collab4" name="teamCollaboration" value="4" onclick="updateTotal()">
-                            <label for="collab4">4</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="collab5" name="teamCollaboration" value="5" onclick="updateTotal()">
-                            <label for="collab5">5</label>
-                        </div>
-                    </div>
-                    <textarea id="collabComment" name="collabComment" placeholder="Comments"></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label>Communication with External Stakeholders: Maintains effective communication with external stakeholders such as sponsors and CROs.</label>
-                    <div class="radio-group">
-                        <div class="radio-option">
-                            <input type="radio" id="externalComm1" name="externalCommunication" value="1" required onclick="updateTotal()">
-                            <label for="externalComm1">1</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="externalComm2" name="externalCommunication" value="2" onclick="updateTotal()">
-                            <label for="externalComm2">2</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="externalComm3" name="externalCommunication" value="3" onclick="updateTotal()">
-                            <label for="externalComm3">3</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="externalComm4" name="externalCommunication" value="4" onclick="updateTotal()">
-                            <label for="externalComm4">4</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="externalComm5" name="externalCommunication" value="5" onclick="updateTotal()">
-                            <label for="externalComm5">5</label>
-                        </div>
-                    </div>
-                    <textarea id="externalCommComment" name="externalCommComment" placeholder="Comments"></textarea>
-                </div>
-
-                <div class="btn-container">
-                    <button type="button" class="btn btn-prev" onclick="prevSection(6)">Previous</button>
-                    <button type="button" class="btn btn-next" onclick="nextSection(6)">Next</button>
-                </div>
-            </div>
-
-            <!-- Section 7: Overall Performance -->
-            <div class="form-section" id="section7">
-                <h2>Overall Performance</h2>
-
-                <!-- Grand Total -->
-                <div class="form-group">
-                    <label for="grandTotal">Grand Total:</label>
-                    <input type="text" id="grandTotal" name="grandTotal" readonly>
-                </div>
-
-                <!-- Nota Passing Score -->
-                <div class="instructions">
-                    <p><strong>Nota:</strong> The passing score is 42 marks out of 70 (60.0%).</p>
-                </div>
-
-                <!-- Strengths -->
-                <div class="form-group">
-                    <label for="strengths">Strengths:</label>
-                    <textarea id="strengths" name="strengths" placeholder="List the strengths of the coordinator"></textarea>
-                </div>
-
-                <!-- Areas for Improvement -->
-                <div class="form-group">
-                    <label for="improvements">Areas for Improvement:</label>
-                    <textarea id="improvements" name="improvements" placeholder="List areas where the coordinator can improve"></textarea>
-                </div>
-
-                <!-- Tandatangan -->
-                <div class="form-group">
-                    <label for="signature">Tandatangan:</label>
-                    <div class="signature-container">
-                        <canvas id="signatureCanvas"></canvas>
-                        <div class="signature-actions">
-                            <button type="button" class="btn signature-clear" onclick="clearSignature()">Clear</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Tombol Previous dan Submit -->
-                <div class="btn-container">
-                    <button type="button" class="btn btn-prev" onclick="prevSection(7)">Previous</button>
-                    <button type="button" class="btn btn-submit" onclick="submitForm()">Submit</button>
-                </div>
-            </div>
-        </form>
+  <h1>EVOS Service Provider Performance Assessment Form</h1>
+  <form id="assessmentForm">
+    <!-- Basic Information -->
+    <div class="section">
+      <h3>Basic Information</h3>
+      <input type="text" name="coordinatorName" placeholder="Coordinator's Name" required>
+      <input type="date" name="assessmentDate" required>
+      <input type="text" name="assessorName" placeholder="Assessor's Name" required>
+      <select name="trialSite" required>
+        <option value="">-- Select Trial Site --</option>
+        <option>Hospital Pulau Pinang</option>
+        <option>Hospital Tuanku Jaafar</option>
+        <option>Hospital Sultanah Bahiyah</option>
+        <option>Hospital Sultan Abdul Halim</option>
+        <option>Hospital Selayang</option>
+        <option>Hospital Ampang</option>
+      </select>
     </div>
 
-    <script>
-        // Fungsi untuk navigasi section
-        let currentSection = 0;
-        const totalSections = document.querySelectorAll('.form-section').length;
+    <!-- Section 1: Trial Management and Coordination -->
+    <div class="section">
+      <h3>Section 1: Trial Management and Coordination</h3>
+      <label>Protocol Adherence (1-5):</label>
+      <input type="number" name="protocolAdherence" min="1" max="5" required>
+      <textarea name="protocolComment" placeholder="Comment"></textarea>
 
-        function showSection(sectionIndex) {
-            document.querySelectorAll('.form-section').forEach(section => {
-                section.classList.remove('active');
-            });
-            document.getElementById(`section${sectionIndex}`).classList.add('active');
+      <label>Timely Communication with Stakeholders (1-5):</label>
+      <input type="number" name="timelyCommunication" min="1" max="5" required>
+      <textarea name="commComment" placeholder="Comment"></textarea>
 
-            const progress = ((sectionIndex + 1) / totalSections) * 100;
-            document.getElementById('progressBar').style.width = `${progress}%`;
-        }
+      <label>Meeting Project Milestones (1-5):</label>
+      <input type="number" name="projectMilestones" min="1" max="5" required>
+      <textarea name="milestoneComment" placeholder="Comment"></textarea>
+    </div>
 
-        function nextSection(current) {
-            if (current < totalSections - 1) {
-                currentSection = current + 1;
-                showSection(currentSection);
-            }
-        }
+    <!-- Section 2: Subject Recruitment -->
+    <div class="section">
+      <h3>Section 2: Subject Recruitment</h3>
+      <label>Pre-Screening and Recruitment Efficiency (1-5):</label>
+      <input type="number" name="preScreening" min="1" max="5" required>
+      <textarea name="screeningComment" placeholder="Comment"></textarea>
 
-        function prevSection(current) {
-            if (current > 0) {
-                currentSection = current - 1;
-                showSection(currentSection);
-            }
-        }
+      <label>Informed Consent Process (1-5):</label>
+      <input type="number" name="informedConsent" min="1" max="5" required>
+      <textarea name="consentComment" placeholder="Comment"></textarea>
+    </div>
 
-        // Fungsi untuk mengupdate Grand Total
-        function updateTotal() {
-            let total = 0;
-            document.querySelectorAll('input[type="radio"]:checked').forEach(radio => {
-                total += parseInt(radio.value);
-            });
-            document.getElementById('grandTotal').value = total;
-        }
+    <!-- Section 3: Data Collection and Documentation -->
+    <div class="section">
+      <h3>Section 3: Data Collection and Documentation</h3>
+      <label>Accuracy of Data Entry (1-5):</label>
+      <input type="number" name="dataAccuracy" min="1" max="5" required>
+      <textarea name="dataEntryComment" placeholder="Comment"></textarea>
 
-        // Fungsi untuk tandatangan
-        const canvas = document.getElementById('signatureCanvas');
-        const ctx = canvas.getContext('2d');
-        let isDrawing = false;
+      <label>Timeliness of Data Submission and Queries Resolution (1-5):</label>
+      <input type="number" name="dataTimeliness" min="1" max="5" required>
+      <textarea name="dataTimelyComment" placeholder="Comment"></textarea>
 
-        canvas.addEventListener('mousedown', (e) => {
-            isDrawing = true;
-            ctx.beginPath();
-            ctx.moveTo(e.offsetX, e.offsetY);
-        });
+      <label>Reporting Adverse Events and Protocol Deviations (1-5):</label>
+      <input type="number" name="adverseEvents" min="1" max="5" required>
+      <textarea name="adverseComment" placeholder="Comment"></textarea>
+    </div>
 
-        canvas.addEventListener('mousemove', (e) => {
-            if (isDrawing) {
-                ctx.lineTo(e.offsetX, e.offsetY);
-                ctx.stroke();
-            }
-        });
+    <!-- Section 4: Regulatory Compliance and Ethics -->
+    <div class="section">
+      <h3>Section 4: Regulatory Compliance and Ethics</h3>
+      <label>Regulatory Document and Site File Maintenance (1-5):</label>
+      <input type="number" name="regulatoryDocs" min="1" max="5" required>
+      <textarea name="regulatoryComment" placeholder="Comment"></textarea>
 
-        canvas.addEventListener('mouseup', () => {
-            isDrawing = false;
-        });
+      <label>Compliance with GCP and Ethics Requirements (1-5):</label>
+      <input type="number" name="gcpCompliance" min="1" max="5" required>
+      <textarea name="gcpComment" placeholder="Comment"></textarea>
+    </div>
 
-        canvas.addEventListener('mouseleave', () => {
-            isDrawing = false;
-        });
+    <!-- Section 5: Study Visit Coordination -->
+    <div class="section">
+      <h3>Section 5: Study Visit Coordination</h3>
+      <label>Scheduling and Planning of Visits (1-5):</label>
+      <input type="number" name="visitScheduling" min="1" max="5" required>
+      <textarea name="schedulingComment" placeholder="Comment"></textarea>
 
-        function clearSignature() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }
+      <label>Conducting Study Visits (1-5):</label>
+      <input type="number" name="visitConducting" min="1" max="5" required>
+      <textarea name="conductingComment" placeholder="Comment"></textarea>
+    </div>
 
-        // Fungsi untuk submit form dan simpan ke Google Sheets
-        function submitForm() {
-            const formData = new FormData(document.getElementById('assessmentForm'));
-            const data = {};
-            formData.forEach((value, key) => {
-                data[key] = value;
-            });
+    <!-- Section 6: Team Collaboration and Communication -->
+    <div class="section">
+      <h3>Section 6: Team Collaboration and Communication</h3>
+      <label>Collaboration with Study Team (1-5):</label>
+      <input type="number" name="teamCollaboration" min="1" max="5" required>
+      <textarea name="collabComment" placeholder="Comment"></textarea>
 
-            // Convert canvas to image
-            const image = canvas.toDataURL(); // Convert canvas to base64 image
-            data.signature = image;
+      <label>Communication with External Stakeholders (1-5):</label>
+      <input type="number" name="externalCommunication" min="1" max="5" required>
+      <textarea name="externalCommComment" placeholder="Comment"></textarea>
+    </div>
 
-            console.log(data); // Debugging: Lihat data yang dihantar
+    <!-- Overall Performance -->
+    <div class="section">
+      <h3>Overall Performance</h3>
+      <label>Strengths:</label>
+      <textarea name="strengths" placeholder="Strengths"></textarea>
 
-            // Kirim data ke Google Sheets menggunakan Google Apps Script
-            fetch('https://script.google.com/macros/s/AKfycbwcywK0vahJ-Wx_o9SGUF6_PLDx0zG_NI3EO0hbYx54l9xprXXUIjNp9O9eRg0aj8s61w/exec', {
-                method: 'POST',
-                body: JSON.stringify(data),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(response => response.json())
-            .then(result => {
-                alert('Data saved to Google Sheets successfully!');
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Failed to save data to Google Sheets.');
-            });
-        }
+      <label>Areas for Improvement:</label>
+      <textarea name="improvements" placeholder="Areas for Improvement"></textarea>
 
-        // Tampilkan section pertama saat halaman dimuat
-        showSection(currentSection);
-    </script>
+      <label>Signature:</label>
+      <input type="text" name="signature" placeholder="Signature" required>
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    document.getElementById('assessmentForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      google.script.run.withSuccessHandler(() => {
+        alert('Data saved successfully!');
+        this.reset();
+      }).saveData(this);
+    });
+  </script>
 </body>
 </html>
