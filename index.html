@@ -732,6 +732,51 @@
                 
                 <div class="btn-container">
                     <button type="button" class="btn btn-prev" onclick="prevSection(6)">Previous</button>
+                    <button type="button" class="btn btn-next" onclick="nextSection(6)">Next</button>
+                </div>
+            </div>
+            
+            <!-- Section 7: Overall Performance -->
+            <div class="form-section" id="section7">
+                <h2>Overall Performance</h2>
+                
+                <!-- Grand Total -->
+                <div class="form-group">
+                    <label for="grandTotal">Grand Total:</label>
+                    <input type="text" id="grandTotal" name="grandTotal" readonly>
+                </div>
+
+                <!-- Nota Passing Score -->
+                <div class="instructions">
+                    <p><strong>Nota:</strong> The passing score is 42 marks out of 70 (60.0%).</p>
+                </div>
+
+                <!-- Strengths -->
+                <div class="form-group">
+                    <label for="strengths">Strengths:</label>
+                    <textarea id="strengths" name="strengths" placeholder="List the strengths of the coordinator"></textarea>
+                </div>
+
+                <!-- Areas for Improvement -->
+                <div class="form-group">
+                    <label for="improvements">Areas for Improvement:</label>
+                    <textarea id="improvements" name="improvements" placeholder="List areas where the coordinator can improve"></textarea>
+                </div>
+
+                <!-- Tandatangan -->
+                <div class="form-group">
+                    <label for="signature">Tandatangan:</label>
+                    <div class="signature-container">
+                        <canvas id="signatureCanvas"></canvas>
+                        <div class="signature-actions">
+                            <button type="button" class="btn signature-clear" onclick="clearSignature()">Clear</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tombol Previous dan Submit -->
+                <div class="btn-container">
+                    <button type="button" class="btn btn-prev" onclick="prevSection(7)">Previous</button>
                     <button type="button" class="btn btn-submit" onclick="submitForm()">Submit</button>
                 </div>
             </div>
@@ -739,19 +784,16 @@
     </div>
 
     <script>
+        // Fungsi untuk navigasi section
         let currentSection = 0;
         const totalSections = document.querySelectorAll('.form-section').length;
 
         function showSection(sectionIndex) {
-            // Sembunyikan semua section
             document.querySelectorAll('.form-section').forEach(section => {
                 section.classList.remove('active');
             });
-
-            // Tampilkan section yang dipilih
             document.getElementById(`section${sectionIndex}`).classList.add('active');
 
-            // Update progress bar
             const progress = ((sectionIndex + 1) / totalSections) * 100;
             document.getElementById('progressBar').style.width = `${progress}%`;
         }
@@ -770,9 +812,69 @@
             }
         }
 
+        // Fungsi untuk mengupdate Grand Total
+        function updateTotal() {
+            let total = 0;
+            document.querySelectorAll('input[type="radio"]:checked').forEach(radio => {
+                total += parseInt(radio.value);
+            });
+            document.getElementById('grandTotal').value = total;
+        }
+
+        // Fungsi untuk tandatangan
+        const canvas = document.getElementById('signatureCanvas');
+        const ctx = canvas.getContext('2d');
+        let isDrawing = false;
+
+        canvas.addEventListener('mousedown', (e) => {
+            isDrawing = true;
+            ctx.beginPath();
+            ctx.moveTo(e.offsetX, e.offsetY);
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            if (isDrawing) {
+                ctx.lineTo(e.offsetX, e.offsetY);
+                ctx.stroke();
+            }
+        });
+
+        canvas.addEventListener('mouseup', () => {
+            isDrawing = false;
+        });
+
+        canvas.addEventListener('mouseleave', () => {
+            isDrawing = false;
+        });
+
+        function clearSignature() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        // Fungsi untuk submit form dan simpan ke Google Sheets
         function submitForm() {
-            alert('Form submitted successfully!');
-            // Anda bisa menambahkan logika pengiriman form di sini
+            const formData = new FormData(document.getElementById('assessmentForm'));
+            const data = {};
+            formData.forEach((value, key) => {
+                data[key] = value;
+            });
+
+            // Kirim data ke Google Sheets menggunakan Google Apps Script
+            fetch('https://script.google.com/macros/s/AKfycbwH45WycyfHP-cKJJCYD98q6kFyXC6K9S7lv63F1FHPOqVPawO4JdsVRkv4UcAff-pm/exec', {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(result => {
+                alert('Data saved to Google Sheets successfully!');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to save data to Google Sheets.');
+            });
         }
 
         // Tampilkan section pertama saat halaman dimuat
