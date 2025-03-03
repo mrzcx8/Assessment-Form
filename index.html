@@ -25,6 +25,7 @@
             background-color: var(--light-gray);
             color: var(--dark-gray);
             line-height: 1.6;
+            padding: 10px;
         }
         
         .container {
@@ -75,6 +76,12 @@
         
         .form-section.active {
             display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
         
         .form-group {
@@ -93,7 +100,7 @@
         textarea,
         select {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             border: 1px solid #ddd;
             border-radius: 4px;
             font-size: 16px;
@@ -116,6 +123,9 @@
         
         .radio-option input {
             margin-bottom: 5px;
+            height: 20px;
+            width: 20px;
+            cursor: pointer;
         }
         
         textarea {
@@ -137,7 +147,7 @@
         
         .btn {
             display: inline-block;
-            padding: 10px 20px;
+            padding: 12px 24px;
             background-color: var(--primary-color);
             color: white;
             border: none;
@@ -145,6 +155,7 @@
             font-size: 16px;
             cursor: pointer;
             transition: background-color 0.3s;
+            margin: 5px;
         }
         
         .btn:hover {
@@ -155,6 +166,7 @@
             display: flex;
             justify-content: space-between;
             margin-top: 20px;
+            flex-wrap: wrap;
         }
         
         .btn-next {
@@ -184,7 +196,7 @@
             margin-bottom: 20px;
         }
         
-        #signatureCanvas, #coordinatorSignatureCanvas {
+        canvas.signature-pad {
             border: 1px dashed #aaa;
             width: 100%;
             height: 150px;
@@ -221,20 +233,93 @@
             transition: width 0.3s ease;
         }
         
+        .summary-box {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .summary-box p {
+            margin-bottom: 8px;
+        }
+        
+        .summary-box .score {
+            font-size: 22px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .passing {
+            color: var(--success-color);
+        }
+        
+        .failing {
+            color: var(--danger-color);
+        }
+        
+        /* Mobile Styles */
         @media (max-width: 768px) {
-            .container {
-                padding: 15px;
+            body {
+                padding: 0;
             }
             
-            .radio-group {
+            .container {
+                padding: 15px;
+                margin-top: 0;
+                margin-bottom: 0;
+                border-radius: 0;
+                min-height: 100vh;
+            }
+            
+            h1 {
+                font-size: 20px;
+            }
+            
+            h2 {
+                font-size: 18px;
+            }
+            
+            .btn {
+                padding: 10px 15px;
+                font-size: 14px;
+                width: 100%;
+                margin: 5px 0;
+            }
+            
+            .btn-container {
                 flex-direction: column;
             }
             
-            .radio-option {
-                width: 100%;
+            .radio-group {
                 flex-direction: row;
+                flex-wrap: wrap;
                 justify-content: space-between;
+            }
+            
+            .radio-option {
+                width: 20%;
                 padding: 5px 0;
+                margin-bottom: 5px;
+            }
+            
+            .radio-option label {
+                font-size: 14px;
+            }
+            
+            input[type="text"],
+            input[type="date"],
+            input[type="email"],
+            textarea,
+            select {
+                padding: 10px;
+                font-size: 14px;
+            }
+            
+            .instructions, .rating-info {
+                font-size: 12px;
+                padding: 10px;
             }
         }
     </style>
@@ -664,3 +749,454 @@
                         </div>
                     </div>
                     <textarea id="conductingComment" name="conductingComment" placeholder="Comments"></textarea>
+                </div>
+                
+                <div class="btn-container">
+                    <button type="button" class="btn btn-prev" onclick="prevSection(5)">Previous</button>
+                    <button type="button" class="btn btn-next" onclick="nextSection(5)">Next</button>
+                </div>
+            </div>
+            
+            <!-- Section 6: Team Collaboration and Communication -->
+            <div class="form-section" id="section6">
+                <h2>Section 6: Team Collaboration and Communication</h2>
+                
+                <div class="form-group">
+                    <label>Teamwork and Communication: Works well with the study team and communicates effectively with colleagues.</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="teamwork1" name="teamwork" value="1" required onclick="updateTotal()">
+                            <label for="teamwork1">1</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="teamwork2" name="teamwork" value="2" onclick="updateTotal()">
+                            <label for="teamwork2">2</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="teamwork3" name="teamwork" value="3" onclick="updateTotal()">
+                            <label for="teamwork3">3</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="teamwork4" name="teamwork" value="4" onclick="updateTotal()">
+                            <label for="teamwork4">4</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="teamwork5" name="teamwork" value="5" onclick="updateTotal()">
+                            <label for="teamwork5">5</label>
+                        </div>
+                    </div>
+                    <textarea id="teamworkComment" name="teamworkComment" placeholder="Comments"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Support of Study Staff: Provides adequate support to other study personnel when required (e.g. support CRA site monitoring visits).</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="support1" name="staffSupport" value="1" required onclick="updateTotal()">
+                            <label for="support1">1</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="support2" name="staffSupport" value="2" onclick="updateTotal()">
+                            <label for="support2">2</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="support3" name="staffSupport" value="3" onclick="updateTotal()">
+                            <label for="support3">3</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="support4" name="staffSupport" value="4" onclick="updateTotal()">
+                            <label for="support4">4</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="support5" name="staffSupport" value="5" onclick="updateTotal()">
+                            <label for="support5">5</label>
+                        </div>
+                    </div>
+                    <textarea id="supportComment" name="supportComment" placeholder="Comments"></textarea>
+                </div>
+                
+                <div class="btn-container">
+                    <button type="button" class="btn btn-prev" onclick="prevSection(6)">Previous</button>
+                    <button type="button" class="btn btn-next" onclick="nextSection(6)">Next</button>
+                </div>
+            </div>
+            
+            <!-- Section 7: Overall Performance -->
+            <div class="form-section" id="section7">
+                <h2>Overall Performance</h2>
+                
+                <div class="summary-box">
+                    <h3>Performance Summary</h3>
+                    <p>Total Score: <span id="totalScore" class="score">0</span> out of 70</p>
+                    <p>Percentage: <span id="scorePercentage">0%</span></p>
+                    <p id="passStatus">The passing score is 42 marks out of 70 (60.0%).</p>
+                </div>
+                
+                <div class="form-group">
+                    <label for="strengths">Strengths:</label>
+                    <textarea id="strengths" name="strengths" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="improvements">Areas for Improvement:</label>
+                    <textarea id="improvements" name="improvements" required></textarea>
+                </div>
+                
+                <div class="btn-container">
+                    <button type="button" class="btn btn-prev" onclick="prevSection(7)">Previous</button>
+                    <button type="button" class="btn btn-next" onclick="nextSection(7)">Next</button>
+                </div>
+            </div>
+            
+            <!-- Section 8: Signatures -->
+            <div class="form-section" id="section8">
+                <h2>Signatures</h2>
+                
+                <div class="form-group">
+                    <label>Assessor's Signature:</label>
+                    <div class="signature-container">
+                        <canvas id="assessorSignatureCanvas" class="signature-pad" width="600" height="150"></canvas>
+                        <div class="signature-actions">
+                            <button type="button" class="btn signature-clear" onclick="clearAssessorSignature()">Clear</button>
+                        </div>
+                    </div>
+                    <input type="hidden" id="assessorSignatureData" name="assessorSignatureData">
+                </div>
+                
+                <div class="form-group">
+                    <label>Coordinator's Signature:</label>
+                    <div class="signature-container">
+                        <canvas id="coordinatorSignatureCanvas" class="signature-pad" width="600" height="150"></canvas>
+                        <div class="signature-actions">
+                            <button type="button" class="btn signature-clear" onclick="clearCoordinatorSignature()">Clear</button>
+                        </div>
+                    </div>
+                    <input type="hidden" id="coordinatorSignatureData" name="coordinatorSignatureData">
+                </div>
+                
+                <div class="btn-container">
+                    <button type="button" class="btn btn-prev" onclick="prevSection(8)">Previous</button>
+                    <button type="button" class="btn btn-submit" onclick="submitForm()">Submit Assessment</button>
+                </div>
+            </div>
+            
+        </form>
+    </div>
+
+    <script>
+        // Total number of sections
+        const totalSections = 9;
+        
+        // Current active section
+        let currentSection = 0;
+        
+        // Signature canvases
+        let assessorCanvas, assessorContext;
+        let coordinatorCanvas, coordinatorContext;
+        let isAssessorDrawing = false;
+        let isCoordinatorDrawing = false;
+        let lastAssessorX, lastAssessorY;
+        let lastCoordinatorX, lastCoordinatorY;
+        
+        // Initialize when page loads
+        window.onload = function() {
+            updateProgressBar();
+            initSignatureCanvases();
+        };
+        
+        // Initialize signature canvases
+        function initSignatureCanvases() {
+            // Assessor signature canvas
+            assessorCanvas = document.getElementById('assessorSignatureCanvas');
+            if (assessorCanvas) {
+                assessorContext = assessorCanvas.getContext('2d');
+                assessorContext.strokeStyle = '#000';
+                assessorContext.lineWidth = 2;
+                
+                // Mouse events for assessor canvas
+                assessorCanvas.addEventListener('mousedown', startAssessorDrawing);
+                assessorCanvas.addEventListener('mousemove', drawAssessorSignature);
+                assessorCanvas.addEventListener('mouseup', stopAssessorDrawing);
+                assessorCanvas.addEventListener('mouseout', stopAssessorDrawing);
+                
+                // Touch events for assessor canvas
+                assessorCanvas.addEventListener('touchstart', function(e) {
+                    e.preventDefault();
+                    startAssessorDrawing(e.touches[0]);
+                });
+                assessorCanvas.addEventListener('touchmove', function(e) {
+                    e.preventDefault();
+                    drawAssessorSignature(e.touches[0]);
+                });
+                assessorCanvas.addEventListener('touchend', stopAssessorDrawing);
+            }
+            
+            // Coordinator signature canvas
+            coordinatorCanvas = document.getElementById('coordinatorSignatureCanvas');
+            if (coordinatorCanvas) {
+                coordinatorContext = coordinatorCanvas.getContext('2d');
+                coordinatorContext.strokeStyle = '#000';
+                coordinatorContext.lineWidth = 2;
+                
+                // Mouse events for coordinator canvas
+                coordinatorCanvas.addEventListener('mousedown', startCoordinatorDrawing);
+                coordinatorCanvas.addEventListener('mousemove', drawCoordinatorSignature);
+                coordinatorCanvas.addEventListener('mouseup', stopCoordinatorDrawing);
+                coordinatorCanvas.addEventListener('mouseout', stopCoordinatorDrawing);
+                
+                // Touch events for coordinator canvas
+                coordinatorCanvas.addEventListener('touchstart', function(e) {
+                    e.preventDefault();
+                    startCoordinatorDrawing(e.touches[0]);
+                });
+                coordinatorCanvas.addEventListener('touchmove', function(e) {
+                    e.preventDefault();
+                    drawCoordinatorSignature(e.touches[0]);
+                });
+                coordinatorCanvas.addEventListener('touchend', stopCoordinatorDrawing);
+            }
+        }
+        
+        // Signature functions for Assessor
+        function startAssessorDrawing(e) {
+            isAssessorDrawing = true;
+            const rect = assessorCanvas.getBoundingClientRect();
+            lastAssessorX = e.clientX - rect.left;
+            lastAssessorY = e.clientY - rect.top;
+        }
+        
+        function drawAssessorSignature(e) {
+            if (!isAssessorDrawing) return;
+            
+            const rect = assessorCanvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            assessorContext.beginPath();
+            assessorContext.moveTo(lastAssessorX, lastAssessorY);
+            assessorContext.lineTo(x, y);
+            assessorContext.stroke();
+            
+            lastAssessorX = x;
+            lastAssessorY = y;
+            
+            // Save signature data
+            document.getElementById('assessorSignatureData').value = assessorCanvas.toDataURL();
+        }
+        
+        function stopAssessorDrawing() {
+            isAssessorDrawing = false;
+        }
+        
+        function clearAssessorSignature() {
+            assessorContext.clearRect(0, 0, assessorCanvas.width, assessorCanvas.height);
+            document.getElementById('assessorSignatureData').value = '';
+        }
+        
+        // Signature functions for Coordinator
+        function startCoordinatorDrawing(e) {
+            isCoordinatorDrawing = true;
+            const rect = coordinatorCanvas.getBoundingClientRect();
+            lastCoordinatorX = e.clientX - rect.left;
+            lastCoordinatorY = e.clientY - rect.top;
+        }
+        
+        function drawCoordinatorSignature(e) {
+            if (!isCoordinatorDrawing) return;
+            
+            const rect = coordinatorCanvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            coordinatorContext.beginPath();
+            coordinatorContext.moveTo(lastCoordinatorX, lastCoordinatorY);
+            coordinatorContext.lineTo(x, y);
+            coordinatorContext.stroke();
+            
+            lastCoordinatorX = x;
+            lastCoordinatorY = y;
+            
+            // Save signature data
+            document.getElementById('coordinatorSignatureData').value = coordinatorCanvas.toDataURL();
+        }
+        
+        function stopCoordinatorDrawing() {
+            isCoordinatorDrawing = false;
+        }
+        
+        function clearCoordinatorSignature() {
+            coordinatorContext.clearRect(0, 0, coordinatorCanvas.width, coordinatorCanvas.height);
+            document.getElementById('coordinatorSignatureData').value = '';
+        }
+        
+        // Navigation functions
+        function nextSection(currentIndex) {
+            // Validate required fields in current section before proceeding
+            if (!validateSection(currentIndex)) {
+                alert('Please fill in all required fields before proceeding.');
+                return;
+            }
+            
+            // Hide current section
+            document.getElementById('section' + currentIndex).classList.remove('active');
+            
+            // Show next section
+            currentSection = currentIndex + 1;
+            document.getElementById('section' + currentSection).classList.add('active');
+            
+            // Update progress bar
+            updateProgressBar();
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+        
+        function prevSection(currentIndex) {
+            // Hide current section
+            document.getElementById('section' + currentIndex).classList.remove('active');
+            
+            // Show previous section
+            currentSection = currentIndex - 1;
+            document.getElementById('section' + currentSection).classList.add('active');
+            
+            // Update progress bar
+            updateProgressBar();
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+        
+        // Validate current section
+        function validateSection(sectionIndex) {
+            const section = document.getElementById('section' + sectionIndex);
+            const requiredInputs = section.querySelectorAll('input[required], select[required], textarea[required]');
+            
+            for (let i = 0; i < requiredInputs.length; i++) {
+                const input = requiredInputs[i];
+                
+                // Skip radio button validation if any radio in the group is checked
+                if (input.type === 'radio') {
+                    const radioGroup = document.getElementsByName(input.name);
+                    let isChecked = false;
+                    
+                    for (let j = 0; j < radioGroup.length; j++) {
+                        if (radioGroup[j].checked) {
+                            isChecked = true;
+                            break;
+                        }
+                    }
+                    
+                    if (!isChecked) {
+                        input.focus();
+                        return false;
+                    }
+                    
+                    // Skip other radios in the same group
+                    i += document.querySelectorAll('input[name="' + input.name + '"]').length - 1;
+                } else if (!input.value.trim()) {
+                    input.focus();
+                    return false;
+                }
+            }
+            
+            return true;
+        }
+        
+        // Update progress bar
+        function updateProgressBar() {
+            const progressBar = document.getElementById('progressBar');
+            const progress = (currentSection / (totalSections - 1)) * 100;
+            progressBar.style.width = progress + '%';
+        }
+        
+        // Calculate total score
+        function updateTotal() {
+            const scoreFields = [
+                'protocolAdherence', 'timelyCommunication', 'projectMilestones',
+                'preScreening', 'informedConsent',
+                'dataAccuracy', 'dataTimeliness', 'adverseEvents',
+                'regulatoryDocs', 'gcpCompliance',
+                'visitScheduling', 'visitConducting',
+                'teamwork', 'staffSupport'
+            ];
+            
+            let totalScore = 0;
+            let fieldsCount = 0;
+            
+            for (const field of scoreFields) {
+                const selectedRadio = document.querySelector('input[name="' + field + '"]:checked');
+                if (selectedRadio) {
+                    totalScore += parseInt(selectedRadio.value);
+                    fieldsCount++;
+                }
+            }
+            
+            // Update total score display
+            const totalScoreElement = document.getElementById('totalScore');
+            if (totalScoreElement) {
+                totalScoreElement.textContent = totalScore;
+                
+                // Calculate percentage
+                const percentage = (totalScore / (fieldsCount * 5)) * 100;
+                
+                if (document.getElementById('scorePercentage')) {
+                    document.getElementById('scorePercentage').textContent = percentage.toFixed(1) + '%';
+                }
+                
+                // Update pass/fail status
+                const passStatus = document.getElementById('passStatus');
+                if (passStatus) {
+                    if (totalScore >= 42) {
+                        passStatus.innerHTML = 'Status: <span class="passing">PASS</span> (The passing score is 42 marks out of 70)';
+                    } else {
+                        passStatus.innerHTML = 'Status: <span class="failing">BELOW PASSING SCORE</span> (The passing score is 42 marks out of 70)';
+                    }
+                }
+            }
+        }
+        
+        // Submit form
+        function submitForm() {
+            if (!validateSection(8)) {
+                alert('Please fill in all required fields before submitting.');
+                return;
+            }
+            
+            alert('Assessment submitted successfully! Score: ' + document.getElementById('totalScore').textContent);
+            
+            // Here you would typically send the form data to a server
+            // For demonstration, we'll just reset and go back to the first section
+            resetForm();
+        }
+        
+        // Reset form to initial state
+        function resetForm() {
+            document.getElementById('assessmentForm').reset();
+            
+            // Hide all sections and show first section
+            for (let i = 0; i < totalSections; i++) {
+                document.getElementById('section' + i).classList.remove('active');
+            }
+            
+            document.getElementById('section0').classList.add('active');
+            currentSection = 0;
+            
+            // Clear signatures
+            if (assessorContext) clearAssessorSignature();
+            if (coordinatorContext) clearCoordinatorSignature();
+            
+            // Reset progress bar
+            updateProgressBar();
+            
+            // Reset score
+            document.getElementById('totalScore').textContent = '0';
+            if (document.getElementById('scorePercentage')) {
+                document.getElementById('scorePercentage').textContent = '0%';
+            }
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>
