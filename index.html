@@ -258,6 +258,71 @@
         .failing {
             color: var(--danger-color);
         }
+
+        .auto-save {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 15px 0;
+            font-size: 14px;
+            color: #2d3748;
+        }
+        
+        .auto-save .dot {
+            height: 10px;
+            width: 10px;
+            background-color: #cbd5e0;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .auto-save .dot.saving {
+            background-color: #f6ad55;
+            animation: pulse 1s infinite;
+        }
+        
+        .auto-save .dot.saved {
+            background-color: #68d391;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        .message {
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+            display: none;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
         
         /* Mobile Styles */
         @media (max-width: 768px) {
@@ -334,9 +399,13 @@
             <div class="progress-bar">
                 <div class="progress" id="progressBar" style="width: 0%"></div>
             </div>
+            <div class="auto-save">
+                <div class="dot" id="saveIndicator"></div>
+                <span id="saveStatus">Ready to save automatically</span>
+            </div>
         </header>
         
-        <form id="assessmentForm">
+        <form id="assessmentForm" onsubmit="return false;">
             <!-- Section 0: Basic Information -->
             <div class="form-section active" id="section0">
                 <h2>Basic Information</h2>
@@ -391,81 +460,81 @@
                     <label>Protocol Adherence: Ensures all aspects of the study are conducted as per the approved protocol.</label>
                     <div class="radio-group">
                         <div class="radio-option">
-                            <input type="radio" id="protocol1" name="protocolAdherence" value="1" required onclick="updateTotal()">
+                            <input type="radio" id="protocol1" name="protocolAdherence" value="1" required onclick="updateTotal(); autoSave();">
                             <label for="protocol1">1</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="protocol2" name="protocolAdherence" value="2" onclick="updateTotal()">
+                            <input type="radio" id="protocol2" name="protocolAdherence" value="2" onclick="updateTotal(); autoSave();">
                             <label for="protocol2">2</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="protocol3" name="protocolAdherence" value="3" onclick="updateTotal()">
+                            <input type="radio" id="protocol3" name="protocolAdherence" value="3" onclick="updateTotal(); autoSave();">
                             <label for="protocol3">3</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="protocol4" name="protocolAdherence" value="4" onclick="updateTotal()">
+                            <input type="radio" id="protocol4" name="protocolAdherence" value="4" onclick="updateTotal(); autoSave();">
                             <label for="protocol4">4</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="protocol5" name="protocolAdherence" value="5" onclick="updateTotal()">
+                            <input type="radio" id="protocol5" name="protocolAdherence" value="5" onclick="updateTotal(); autoSave();">
                             <label for="protocol5">5</label>
                         </div>
                     </div>
-                    <textarea id="protocolComment" name="protocolComment" placeholder="Comments"></textarea>
+                    <textarea id="protocolComment" name="protocolComment" placeholder="Comments" onchange="autoSave();" onblur="autoSave();"></textarea>
                 </div>
                 
                 <div class="form-group">
                     <label>Timely Communication with Stakeholders: Effectively communicates with the principal investigator, CROs, and the study team to ensure smooth coordination.</label>
                     <div class="radio-group">
                         <div class="radio-option">
-                            <input type="radio" id="comm1" name="timelyCommunication" value="1" required onclick="updateTotal()">
+                            <input type="radio" id="comm1" name="timelyCommunication" value="1" required onclick="updateTotal(); autoSave();">
                             <label for="comm1">1</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="comm2" name="timelyCommunication" value="2" onclick="updateTotal()">
+                            <input type="radio" id="comm2" name="timelyCommunication" value="2" onclick="updateTotal(); autoSave();">
                             <label for="comm2">2</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="comm3" name="timelyCommunication" value="3" onclick="updateTotal()">
+                            <input type="radio" id="comm3" name="timelyCommunication" value="3" onclick="updateTotal(); autoSave();">
                             <label for="comm3">3</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="comm4" name="timelyCommunication" value="4" onclick="updateTotal()">
+                            <input type="radio" id="comm4" name="timelyCommunication" value="4" onclick="updateTotal(); autoSave();">
                             <label for="comm4">4</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="comm5" name="timelyCommunication" value="5" onclick="updateTotal()">
+                            <input type="radio" id="comm5" name="timelyCommunication" value="5" onclick="updateTotal(); autoSave();">
                             <label for="comm5">5</label>
                         </div>
                     </div>
-                    <textarea id="commComment" name="commComment" placeholder="Comments"></textarea>
+                    <textarea id="commComment" name="commComment" placeholder="Comments" onchange="autoSave();" onblur="autoSave();"></textarea>
                 </div>
                 
                 <div class="form-group">
                     <label>Meeting Project Milestones: Ensures that key study milestones (e.g., recruitment targets, data submission) are met on time.</label>
                     <div class="radio-group">
                         <div class="radio-option">
-                            <input type="radio" id="milestone1" name="projectMilestones" value="1" required onclick="updateTotal()">
+                            <input type="radio" id="milestone1" name="projectMilestones" value="1" required onclick="updateTotal(); autoSave();">
                             <label for="milestone1">1</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="milestone2" name="projectMilestones" value="2" onclick="updateTotal()">
+                            <input type="radio" id="milestone2" name="projectMilestones" value="2" onclick="updateTotal(); autoSave();">
                             <label for="milestone2">2</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="milestone3" name="projectMilestones" value="3" onclick="updateTotal()">
+                            <input type="radio" id="milestone3" name="projectMilestones" value="3" onclick="updateTotal(); autoSave();">
                             <label for="milestone3">3</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="milestone4" name="projectMilestones" value="4" onclick="updateTotal()">
+                            <input type="radio" id="milestone4" name="projectMilestones" value="4" onclick="updateTotal(); autoSave();">
                             <label for="milestone4">4</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="milestone5" name="projectMilestones" value="5" onclick="updateTotal()">
+                            <input type="radio" id="milestone5" name="projectMilestones" value="5" onclick="updateTotal(); autoSave();">
                             <label for="milestone5">5</label>
                         </div>
                     </div>
-                    <textarea id="milestoneComment" name="milestoneComment" placeholder="Comments"></textarea>
+                    <textarea id="milestoneComment" name="milestoneComment" placeholder="Comments" onchange="autoSave();" onblur="autoSave();"></textarea>
                 </div>
                 
                 <div class="btn-container">
@@ -482,54 +551,54 @@
                     <label>Pre-Screening and Recruitment Efficiency: Effectively pre-screen subjects as per eligibility criteria.</label>
                     <div class="radio-group">
                         <div class="radio-option">
-                            <input type="radio" id="screening1" name="preScreening" value="1" required onclick="updateTotal()">
+                            <input type="radio" id="screening1" name="preScreening" value="1" required onclick="updateTotal(); autoSave();">
                             <label for="screening1">1</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="screening2" name="preScreening" value="2" onclick="updateTotal()">
+                            <input type="radio" id="screening2" name="preScreening" value="2" onclick="updateTotal(); autoSave();">
                             <label for="screening2">2</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="screening3" name="preScreening" value="3" onclick="updateTotal()">
+                            <input type="radio" id="screening3" name="preScreening" value="3" onclick="updateTotal(); autoSave();">
                             <label for="screening3">3</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="screening4" name="preScreening" value="4" onclick="updateTotal()">
+                            <input type="radio" id="screening4" name="preScreening" value="4" onclick="updateTotal(); autoSave();">
                             <label for="screening4">4</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="screening5" name="preScreening" value="5" onclick="updateTotal()">
+                            <input type="radio" id="screening5" name="preScreening" value="5" onclick="updateTotal(); autoSave();">
                             <label for="screening5">5</label>
                         </div>
                     </div>
-                    <textarea id="screeningComment" name="screeningComment" placeholder="Comments"></textarea>
+                    <textarea id="screeningComment" name="screeningComment" placeholder="Comments" onchange="autoSave();" onblur="autoSave();"></textarea>
                 </div>
                 
                 <div class="form-group">
                     <label>Informed Consent Process: Effectively assist investigators to obtain informed consent from participants.</label>
                     <div class="radio-group">
                         <div class="radio-option">
-                            <input type="radio" id="consent1" name="informedConsent" value="1" required onclick="updateTotal()">
+                            <input type="radio" id="consent1" name="informedConsent" value="1" required onclick="updateTotal(); autoSave();">
                             <label for="consent1">1</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="consent2" name="informedConsent" value="2" onclick="updateTotal()">
+                            <input type="radio" id="consent2" name="informedConsent" value="2" onclick="updateTotal(); autoSave();">
                             <label for="consent2">2</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="consent3" name="informedConsent" value="3" onclick="updateTotal()">
+                            <input type="radio" id="consent3" name="informedConsent" value="3" onclick="updateTotal(); autoSave();">
                             <label for="consent3">3</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="consent4" name="informedConsent" value="4" onclick="updateTotal()">
+                            <input type="radio" id="consent4" name="informedConsent" value="4" onclick="updateTotal(); autoSave();">
                             <label for="consent4">4</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="consent5" name="informedConsent" value="5" onclick="updateTotal()">
+                            <input type="radio" id="consent5" name="informedConsent" value="5" onclick="updateTotal(); autoSave();">
                             <label for="consent5">5</label>
                         </div>
                     </div>
-                    <textarea id="consentComment" name="consentComment" placeholder="Comments"></textarea>
+                    <textarea id="consentComment" name="consentComment" placeholder="Comments" onchange="autoSave();" onblur="autoSave();"></textarea>
                 </div>
                 
                 <div class="btn-container">
@@ -546,81 +615,81 @@
                     <label>Accuracy of Data Entry: Ensures accurate and complete data entry in Case Report Forms (CRFs) and REDCap databases.</label>
                     <div class="radio-group">
                         <div class="radio-option">
-                            <input type="radio" id="dataEntry1" name="dataAccuracy" value="1" required onclick="updateTotal()">
+                            <input type="radio" id="dataEntry1" name="dataAccuracy" value="1" required onclick="updateTotal(); autoSave();">
                             <label for="dataEntry1">1</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="dataEntry2" name="dataAccuracy" value="2" onclick="updateTotal()">
+                            <input type="radio" id="dataEntry2" name="dataAccuracy" value="2" onclick="updateTotal(); autoSave();">
                             <label for="dataEntry2">2</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="dataEntry3" name="dataAccuracy" value="3" onclick="updateTotal()">
+                            <input type="radio" id="dataEntry3" name="dataAccuracy" value="3" onclick="updateTotal(); autoSave();">
                             <label for="dataEntry3">3</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="dataEntry4" name="dataAccuracy" value="4" onclick="updateTotal()">
+                            <input type="radio" id="dataEntry4" name="dataAccuracy" value="4" onclick="updateTotal(); autoSave();">
                             <label for="dataEntry4">4</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="dataEntry5" name="dataAccuracy" value="5" onclick="updateTotal()">
+                            <input type="radio" id="dataEntry5" name="dataAccuracy" value="5" onclick="updateTotal(); autoSave();">
                             <label for="dataEntry5">5</label>
                         </div>
                     </div>
-                    <textarea id="dataEntryComment" name="dataEntryComment" placeholder="Comments"></textarea>
+                    <textarea id="dataEntryComment" name="dataEntryComment" placeholder="Comments" onchange="autoSave();" onblur="autoSave();"></textarea>
                 </div>
                 
                 <div class="form-group">
                     <label>Timeliness of Data Submission and Queries Resolution: Submits data and resolves data queries in a timely manner without delays.</label>
                     <div class="radio-group">
                         <div class="radio-option">
-                            <input type="radio" id="dataTimely1" name="dataTimeliness" value="1" required onclick="updateTotal()">
+                            <input type="radio" id="dataTimely1" name="dataTimeliness" value="1" required onclick="updateTotal(); autoSave();">
                             <label for="dataTimely1">1</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="dataTimely2" name="dataTimeliness" value="2" onclick="updateTotal()">
+                            <input type="radio" id="dataTimely2" name="dataTimeliness" value="2" onclick="updateTotal(); autoSave();">
                             <label for="dataTimely2">2</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="dataTimely3" name="dataTimeliness" value="3" onclick="updateTotal()">
+                            <input type="radio" id="dataTimely3" name="dataTimeliness" value="3" onclick="updateTotal(); autoSave();">
                             <label for="dataTimely3">3</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="dataTimely4" name="dataTimeliness" value="4" onclick="updateTotal()">
+                            <input type="radio" id="dataTimely4" name="dataTimeliness" value="4" onclick="updateTotal(); autoSave();">
                             <label for="dataTimely4">4</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="dataTimely5" name="dataTimeliness" value="5" onclick="updateTotal()">
+                            <input type="radio" id="dataTimely5" name="dataTimeliness" value="5" onclick="updateTotal(); autoSave();">
                             <label for="dataTimely5">5</label>
                         </div>
                     </div>
-                    <textarea id="dataTimelyComment" name="dataTimelyComment" placeholder="Comments"></textarea>
+                    <textarea id="dataTimelyComment" name="dataTimelyComment" placeholder="Comments" onchange="autoSave();" onblur="autoSave();"></textarea>
                 </div>
                 
                 <div class="form-group">
                     <label>Reporting Adverse Events and Protocol Deviations: Identifies and reports adverse events or protocol deviations promptly and appropriately.</label>
                     <div class="radio-group">
                         <div class="radio-option">
-                            <input type="radio" id="adverse1" name="adverseEvents" value="1" required onclick="updateTotal()">
+                            <input type="radio" id="adverse1" name="adverseEvents" value="1" required onclick="updateTotal(); autoSave();">
                             <label for="adverse1">1</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="adverse2" name="adverseEvents" value="2" onclick="updateTotal()">
+                            <input type="radio" id="adverse2" name="adverseEvents" value="2" onclick="updateTotal(); autoSave();">
                             <label for="adverse2">2</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="adverse3" name="adverseEvents" value="3" onclick="updateTotal()">
+                            <input type="radio" id="adverse3" name="adverseEvents" value="3" onclick="updateTotal(); autoSave();">
                             <label for="adverse3">3</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="adverse4" name="adverseEvents" value="4" onclick="updateTotal()">
+                            <input type="radio" id="adverse4" name="adverseEvents" value="4" onclick="updateTotal(); autoSave();">
                             <label for="adverse4">4</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="adverse5" name="adverseEvents" value="5" onclick="updateTotal()">
+                            <input type="radio" id="adverse5" name="adverseEvents" value="5" onclick="updateTotal(); autoSave();">
                             <label for="adverse5">5</label>
                         </div>
                     </div>
-                    <textarea id="adverseComment" name="adverseComment" placeholder="Comments"></textarea>
+                    <textarea id="adverseComment" name="adverseComment" placeholder="Comments" onchange="autoSave();" onblur="autoSave();"></textarea>
                 </div>
                 
                 <div class="btn-container">
@@ -637,54 +706,54 @@
                     <label>Regulatory Document and Site File Maintenance: Keeps all regulatory documents and Site File updated and audit-ready.</label>
                     <div class="radio-group">
                         <div class="radio-option">
-                            <input type="radio" id="regulatory1" name="regulatoryDocs" value="1" required onclick="updateTotal()">
+                            <input type="radio" id="regulatory1" name="regulatoryDocs" value="1" required onclick="updateTotal(); autoSave();">
                             <label for="regulatory1">1</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="regulatory2" name="regulatoryDocs" value="2" onclick="updateTotal()">
+                            <input type="radio" id="regulatory2" name="regulatoryDocs" value="2" onclick="updateTotal(); autoSave();">
                             <label for="regulatory2">2</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="regulatory3" name="regulatoryDocs" value="3" onclick="updateTotal()">
+                            <input type="radio" id="regulatory3" name="regulatoryDocs" value="3" onclick="updateTotal(); autoSave();">
                             <label for="regulatory3">3</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="regulatory4" name="regulatoryDocs" value="4" onclick="updateTotal()">
+                            <input type="radio" id="regulatory4" name="regulatoryDocs" value="4" onclick="updateTotal(); autoSave();">
                             <label for="regulatory4">4</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="regulatory5" name="regulatoryDocs" value="5" onclick="updateTotal()">
+                            <input type="radio" id="regulatory5" name="regulatoryDocs" value="5" onclick="updateTotal(); autoSave();">
                             <label for="regulatory5">5</label>
                         </div>
                     </div>
-                    <textarea id="regulatoryComment" name="regulatoryComment" placeholder="Comments"></textarea>
+                    <textarea id="regulatoryComment" name="regulatoryComment" placeholder="Comments" onchange="autoSave();" onblur="autoSave();"></textarea>
                 </div>
                 
                 <div class="form-group">
                     <label>Compliance with GCP and Ethics Requirements: Adheres to Good Clinical Practice (GCP) guidelines and ethical standards.</label>
                     <div class="radio-group">
                         <div class="radio-option">
-                            <input type="radio" id="gcp1" name="gcpCompliance" value="1" required onclick="updateTotal()">
+                            <input type="radio" id="gcp1" name="gcpCompliance" value="1" required onclick="updateTotal(); autoSave();">
                             <label for="gcp1">1</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="gcp2" name="gcpCompliance" value="2" onclick="updateTotal()">
+                            <input type="radio" id="gcp2" name="gcpCompliance" value="2" onclick="updateTotal(); autoSave();">
                             <label for="gcp2">2</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="gcp3" name="gcpCompliance" value="3" onclick="updateTotal()">
+                            <input type="radio" id="gcp3" name="gcpCompliance" value="3" onclick="updateTotal(); autoSave();">
                             <label for="gcp3">3</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="gcp4" name="gcpCompliance" value="4" onclick="updateTotal()">
+                            <input type="radio" id="gcp4" name="gcpCompliance" value="4" onclick="updateTotal(); autoSave();">
                             <label for="gcp4">4</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="gcp5" name="gcpCompliance" value="5" onclick="updateTotal()">
+                            <input type="radio" id="gcp5" name="gcpCompliance" value="5" onclick="updateTotal(); autoSave();">
                             <label for="gcp5">5</label>
                         </div>
                     </div>
-                    <textarea id="gcpComment" name="gcpComment" placeholder="Comments"></textarea>
+                    <textarea id="gcpComment" name="gcpComment" placeholder="Comments" onchange="autoSave();" onblur="autoSave();"></textarea>
                 </div>
                 
                 <div class="btn-container">
@@ -701,54 +770,54 @@
                     <label>Scheduling and Planning of Visits: Effectively schedules participant visits and ensures they follow the study timeline.</label>
                     <div class="radio-group">
                         <div class="radio-option">
-                            <input type="radio" id="scheduling1" name="visitScheduling" value="1" required onclick="updateTotal()">
+                            <input type="radio" id="scheduling1" name="visitScheduling" value="1" required onclick="updateTotal(); autoSave();">
                             <label for="scheduling1">1</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="scheduling2" name="visitScheduling" value="2" onclick="updateTotal()">
+                            <input type="radio" id="scheduling2" name="visitScheduling" value="2" onclick="updateTotal(); autoSave();">
                             <label for="scheduling2">2</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="scheduling3" name="visitScheduling" value="3" onclick="updateTotal()">
+                            <input type="radio" id="scheduling3" name="visitScheduling" value="3" onclick="updateTotal(); autoSave();">
                             <label for="scheduling3">3</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="scheduling4" name="visitScheduling" value="4" onclick="updateTotal()">
+                            <input type="radio" id="scheduling4" name="visitScheduling" value="4" onclick="updateTotal(); autoSave();">
                             <label for="scheduling4">4</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="scheduling5" name="visitScheduling" value="5" onclick="updateTotal()">
+                            <input type="radio" id="scheduling5" name="visitScheduling" value="5" onclick="updateTotal(); autoSave();">
                             <label for="scheduling5">5</label>
                         </div>
                     </div>
-                    <textarea id="schedulingComment" name="schedulingComment" placeholder="Comments"></textarea>
+                    <textarea id="schedulingComment" name="schedulingComment" placeholder="Comments" onchange="autoSave();" onblur="autoSave();"></textarea>
                 </div>
                 
                 <div class="form-group">
                     <label>Conducting Study Visits: Efficiently assists investigators in study visits procedures (e.g., phone call interview) during study visits.</label>
                     <div class="radio-group">
                         <div class="radio-option">
-                            <input type="radio" id="conducting1" name="visitConducting" value="1" required onclick="updateTotal()">
+                            <input type="radio" id="conducting1" name="visitConducting" value="1" required onclick="updateTotal(); autoSave();">
                             <label for="conducting1">1</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="conducting2" name="visitConducting" value="2" onclick="updateTotal()">
+                            <input type="radio" id="conducting2" name="visitConducting" value="2" onclick="updateTotal(); autoSave();">
                             <label for="conducting2">2</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="conducting3" name="visitConducting" value="3" onclick="updateTotal()">
+                            <input type="radio" id="conducting3" name="visitConducting" value="3" onclick="updateTotal(); autoSave();">
                             <label for="conducting3">3</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="conducting4" name="visitConducting" value="4" onclick="updateTotal()">
+                            <input type="radio" id="conducting4" name="visitConducting" value="4" onclick="updateTotal(); autoSave();">
                             <label for="conducting4">4</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="conducting5" name="visitConducting" value="5" onclick="updateTotal()">
+                            <input type="radio" id="conducting5" name="visitConducting" value="5" onclick="updateTotal(); autoSave();">
                             <label for="conducting5">5</label>
                         </div>
                     </div>
-                    <textarea id="conductingComment" name="conductingComment" placeholder="Comments"></textarea>
+                    <textarea id="conductingComment" name="conductingComment" placeholder="Comments" onchange="autoSave();" onblur="autoSave();"></textarea>
                 </div>
                 
                 <div class="btn-container">
@@ -765,54 +834,54 @@
                     <label>Teamwork and Communication: Works well with the study team and communicates effectively with colleagues.</label>
                     <div class="radio-group">
                         <div class="radio-option">
-                            <input type="radio" id="teamwork1" name="teamwork" value="1" required onclick="updateTotal()">
+                            <input type="radio" id="teamwork1" name="teamwork" value="1" required onclick="updateTotal(); autoSave();">
                             <label for="teamwork1">1</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="teamwork2" name="teamwork" value="2" onclick="updateTotal()">
+                            <input type="radio" id="teamwork2" name="teamwork" value="2" onclick="updateTotal(); autoSave();">
                             <label for="teamwork2">2</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="teamwork3" name="teamwork" value="3" onclick="updateTotal()">
+                            <input type="radio" id="teamwork3" name="teamwork" value="3" onclick="updateTotal(); autoSave();">
                             <label for="teamwork3">3</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="teamwork4" name="teamwork" value="4" onclick="updateTotal()">
+                            <input type="radio" id="teamwork4" name="teamwork" value="4" onclick="updateTotal(); autoSave();">
                             <label for="teamwork4">4</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="teamwork5" name="teamwork" value="5" onclick="updateTotal()">
+                            <input type="radio" id="teamwork5" name="teamwork" value="5" onclick="updateTotal(); autoSave();">
                             <label for="teamwork5">5</label>
                         </div>
                     </div>
-                    <textarea id="teamworkComment" name="teamworkComment" placeholder="Comments"></textarea>
+                    <textarea id="teamworkComment" name="teamworkComment" placeholder="Comments" onchange="autoSave();" onblur="autoSave();"></textarea>
                 </div>
                 
                 <div class="form-group">
                     <label>Support of Study Staff: Provides adequate support to other study personnel when required (e.g. support CRA site monitoring visits).</label>
                     <div class="radio-group">
                         <div class="radio-option">
-                            <input type="radio" id="support1" name="staffSupport" value="1" required onclick="updateTotal()">
+                            <input type="radio" id="support1" name="staffSupport" value="1" required onclick="updateTotal(); autoSave();">
                             <label for="support1">1</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="support2" name="staffSupport" value="2" onclick="updateTotal()">
+                            <input type="radio" id="support2" name="staffSupport" value="2" onclick="updateTotal(); autoSave();">
                             <label for="support2">2</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="support3" name="staffSupport" value="3" onclick="updateTotal()">
+                            <input type="radio" id="support3" name="staffSupport" value="3" onclick="updateTotal(); autoSave();">
                             <label for="support3">3</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="support4" name="staffSupport" value="4" onclick="updateTotal()">
+                            <input type="radio" id="support4" name="staffSupport" value="4" onclick="updateTotal(); autoSave();">
                             <label for="support4">4</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="support5" name="staffSupport" value="5" onclick="updateTotal()">
+                            <input type="radio" id="support5" name="staffSupport" value="5" onclick="updateTotal(); autoSave();">
                             <label for="support5">5</label>
                         </div>
                     </div>
-                    <textarea id="supportComment" name="supportComment" placeholder="Comments"></textarea>
+                    <textarea id="supportComment" name="supportComment" placeholder="Comments" onchange="autoSave();" onblur="autoSave();"></textarea>
                 </div>
                 
                 <div class="btn-container">
@@ -834,24 +903,15 @@
                 
                 <div class="form-group">
                     <label for="strengths">Strengths:</label>
-                    <textarea id="strengths" name="strengths" required></textarea>
+                    <textarea id="strengths" name="strengths" required onchange="autoSave();" onblur="autoSave();"></textarea>
                 </div>
                 
                 <div class="form-group">
                     <label for="improvements">Areas for Improvement:</label>
-                    <textarea id="improvements" name="improvements" required></textarea>
+                    <textarea id="improvements" name="improvements" required onchange="autoSave();" onblur="autoSave();"></textarea>
                 </div>
-                
-                <div class="btn-container">
-                    <button type="button" class="btn btn-prev" onclick="prevSection(7)">Previous</button>
-                    <button type="button" class="btn btn-next" onclick="nextSection(7)">Next</button>
-                </div>
-            </div>
-            
-            <!-- Section 8: Signatures -->
-            <div class="form-section" id="section8">
-                <h2>Signatures</h2>
-                
+
+                <!-- Signature Section (Added right after Areas for Improvement) -->
                 <div class="form-group">
                     <label>Assessor's Signature:</label>
                     <div class="signature-container">
@@ -875,17 +935,22 @@
                 </div>
                 
                 <div class="btn-container">
-                    <button type="button" class="btn btn-prev" onclick="prevSection(8)">Previous</button>
-                    <button type="button" class="btn btn-submit" onclick="submitForm()">Submit Assessment</button>
+                    <button type="button" class="btn btn-prev" onclick="prevSection(7)">Previous</button>
+                    <button type="button" class="btn btn-submit" onclick="finalizeSubmission()">Complete Assessment</button>
+                    <div class="loading-spinner" id="loadingSpinner"></div>
                 </div>
+                
+                <div class="message" id="submitMessage"></div>
             </div>
-            
         </form>
     </div>
 
     <script>
+        // Google Apps Script URL - THIS IS YOUR SCRIPT URL
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyfHvOU3WcsMeyRyNLKSGCbZwG48MotbAKPkIo-5Bw3m6zEQDwcIcKVV8tBl1eA_W-MnQ/exec';
+        
         // Total number of sections
-        const totalSections = 9;
+        const totalSections = 8;
         
         // Current active section
         let currentSection = 0;
@@ -898,11 +963,226 @@
         let lastAssessorX, lastAssessorY;
         let lastCoordinatorX, lastCoordinatorY;
         
+        // Auto save variables
+        let saveTimeout;
+        let formData = {}; // Current form data
+        let sessionId = generateSessionId(); // Unique session ID for this assessment
+        
         // Initialize when page loads
         window.onload = function() {
             updateProgressBar();
             initSignatureCanvases();
+            
+            // Load saved data if available
+            loadFormData();
+            
+            // Add event listeners to all form inputs for auto-save
+            addAutoSaveListeners();
         };
+        
+        // Generate random session ID
+        function generateSessionId() {
+            return 'evos_' + Math.random().toString(36).substring(2, 15);
+        }
+        
+        // Add auto-save listeners to all form inputs
+        function addAutoSaveListeners() {
+            const inputs = document.querySelectorAll('input, select, textarea');
+            
+            inputs.forEach(input => {
+                if (input.type === 'text' || input.type === 'date' || input.tagName === 'SELECT' || input.tagName === 'TEXTAREA') {
+                    input.addEventListener('change', autoSave);
+                    input.addEventListener('blur', autoSave);
+                }
+                
+                if (input.type === 'radio') {
+                    input.addEventListener('click', autoSave);
+                }
+            });
+        }
+        
+        // Auto save form data
+        function autoSave() {
+            const saveIndicator = document.getElementById('saveIndicator');
+            const saveStatus = document.getElementById('saveStatus');
+            
+            // Show saving indicator
+            saveIndicator.classList.add('saving');
+            saveIndicator.classList.remove('saved');
+            saveStatus.textContent = 'Saving...';
+            
+            // Clear previous timeout
+            if (saveTimeout) {
+                clearTimeout(saveTimeout);
+            }
+            
+            // Set a delay to avoid too many saves
+            saveTimeout = setTimeout(() => {
+                // Collect form data
+                collectFormData();
+                
+                // Save data locally
+                saveFormData();
+                
+                // Update indicator
+                saveIndicator.classList.remove('saving');
+                saveIndicator.classList.add('saved');
+                saveStatus.textContent = 'All changes saved automatically';
+                
+                // Reset after a while
+                setTimeout(() => {
+                    saveIndicator.classList.remove('saved');
+                    saveStatus.textContent = 'Ready to save automatically';
+                }, 3000);
+            }, 1000);
+        }
+        
+        // Collect all form data
+        function collectFormData() {
+            formData = {
+                sessionId: sessionId,
+                timestamp: new Date().toISOString(),
+                
+                // Basic Information
+                coordinatorName: document.getElementById('coordinatorName').value,
+                assessmentDate: document.getElementById('assessmentDate').value,
+                assessorName: document.getElementById('assessorName').value,
+                trialSite: document.getElementById('trialSite').value,
+                
+                // Section 1
+                protocolAdherence: getSelectedRadioValue('protocolAdherence'),
+                protocolComment: document.getElementById('protocolComment').value,
+                timelyCommunication: getSelectedRadioValue('timelyCommunication'),
+                commComment: document.getElementById('commComment').value,
+                projectMilestones: getSelectedRadioValue('projectMilestones'),
+                milestoneComment: document.getElementById('milestoneComment').value,
+                
+                // Section 2
+                preScreening: getSelectedRadioValue('preScreening'),
+                screeningComment: document.getElementById('screeningComment').value,
+                informedConsent: getSelectedRadioValue('informedConsent'),
+                consentComment: document.getElementById('consentComment').value,
+                
+                // Section 3
+                dataAccuracy: getSelectedRadioValue('dataAccuracy'),
+                dataEntryComment: document.getElementById('dataEntryComment').value,
+                dataTimeliness: getSelectedRadioValue('dataTimeliness'),
+                dataTimelyComment: document.getElementById('dataTimelyComment').value,
+                adverseEvents: getSelectedRadioValue('adverseEvents'),
+                adverseComment: document.getElementById('adverseComment').value,
+                
+                // Section 4
+                regulatoryDocs: getSelectedRadioValue('regulatoryDocs'),
+                regulatoryComment: document.getElementById('regulatoryComment').value,
+                gcpCompliance: getSelectedRadioValue('gcpCompliance'),
+                gcpComment: document.getElementById('gcpComment').value,
+                
+                // Section 5
+                visitScheduling: getSelectedRadioValue('visitScheduling'),
+                schedulingComment: document.getElementById('schedulingComment').value,
+                visitConducting: getSelectedRadioValue('visitConducting'),
+                conductingComment: document.getElementById('conductingComment').value,
+                
+                // Section 6
+                teamwork: getSelectedRadioValue('teamwork'),
+                teamworkComment: document.getElementById('teamworkComment').value,
+                staffSupport: getSelectedRadioValue('staffSupport'),
+                supportComment: document.getElementById('supportComment').value,
+                
+                // Overall Performance
+                totalScore: document.getElementById('totalScore').textContent,
+                strengths: document.getElementById('strengths').value,
+                improvements: document.getElementById('improvements').value,
+                
+                // Signatures
+                hasAssessorSignature: document.getElementById('assessorSignatureData').value ? 'YES' : 'NO',
+                hasCoordinatorSignature: document.getElementById('coordinatorSignatureData').value ? 'YES' : 'NO',
+                
+                // Form status
+                isComplete: false,
+                currentSection: currentSection
+            };
+        }
+        
+        // Save form data locally
+        function saveFormData() {
+            // Save to localStorage for restore if page refreshes
+            localStorage.setItem('evosFormData_' + sessionId, JSON.stringify(formData));
+        }
+        
+        // Load form data from local storage
+        function loadFormData() {
+            // Check if we have saved data for this session
+            const savedData = localStorage.getItem('evosFormData_' + sessionId);
+            
+            if (savedData) {
+                formData = JSON.parse(savedData);
+                
+                // Restore form state
+                if (formData.coordinatorName) document.getElementById('coordinatorName').value = formData.coordinatorName;
+                if (formData.assessmentDate) document.getElementById('assessmentDate').value = formData.assessmentDate;
+                if (formData.assessorName) document.getElementById('assessorName').value = formData.assessorName;
+                if (formData.trialSite) document.getElementById('trialSite').value = formData.trialSite;
+                
+                // Restore radio buttons
+                restoreRadioButton('protocolAdherence', formData.protocolAdherence);
+                restoreRadioButton('timelyCommunication', formData.timelyCommunication);
+                restoreRadioButton('projectMilestones', formData.projectMilestones);
+                restoreRadioButton('preScreening', formData.preScreening);
+                restoreRadioButton('informedConsent', formData.informedConsent);
+                restoreRadioButton('dataAccuracy', formData.dataAccuracy);
+                restoreRadioButton('dataTimeliness', formData.dataTimeliness);
+                restoreRadioButton('adverseEvents', formData.adverseEvents);
+                restoreRadioButton('regulatoryDocs', formData.regulatoryDocs);
+                restoreRadioButton('gcpCompliance', formData.gcpCompliance);
+                restoreRadioButton('visitScheduling', formData.visitScheduling);
+                restoreRadioButton('visitConducting', formData.visitConducting);
+                restoreRadioButton('teamwork', formData.teamwork);
+                restoreRadioButton('staffSupport', formData.staffSupport);
+                
+                // Restore comments
+                if (formData.protocolComment) document.getElementById('protocolComment').value = formData.protocolComment;
+                if (formData.commComment) document.getElementById('commComment').value = formData.commComment;
+                if (formData.milestoneComment) document.getElementById('milestoneComment').value = formData.milestoneComment;
+                if (formData.screeningComment) document.getElementById('screeningComment').value = formData.screeningComment;
+                if (formData.consentComment) document.getElementById('consentComment').value = formData.consentComment;
+                if (formData.dataEntryComment) document.getElementById('dataEntryComment').value = formData.dataEntryComment;
+                if (formData.dataTimelyComment) document.getElementById('dataTimelyComment').value = formData.dataTimelyComment;
+                if (formData.adverseComment) document.getElementById('adverseComment').value = formData.adverseComment;
+                if (formData.regulatoryComment) document.getElementById('regulatoryComment').value = formData.regulatoryComment;
+                if (formData.gcpComment) document.getElementById('gcpComment').value = formData.gcpComment;
+                if (formData.schedulingComment) document.getElementById('schedulingComment').value = formData.schedulingComment;
+                if (formData.conductingComment) document.getElementById('conductingComment').value = formData.conductingComment;
+                if (formData.teamworkComment) document.getElementById('teamworkComment').value = formData.teamworkComment;
+                if (formData.supportComment) document.getElementById('supportComment').value = formData.supportComment;
+                if (formData.strengths) document.getElementById('strengths').value = formData.strengths;
+                if (formData.improvements) document.getElementById('improvements').value = formData.improvements;
+                
+                // Update total score
+                updateTotal();
+                
+                // Restore current section
+                if (typeof formData.currentSection === 'number') {
+                    // Hide all sections
+                    for (let i = 0; i < totalSections; i++) {
+                        document.getElementById('section' + i).classList.remove('active');
+                    }
+                    
+                    // Show saved section
+                    currentSection = formData.currentSection;
+                    document.getElementById('section' + currentSection).classList.add('active');
+                    updateProgressBar();
+                }
+            }
+        }
+        
+        // Restore radio button state
+        function restoreRadioButton(name, value) {
+            if (value) {
+                const radio = document.getElementById(name + value);
+                if (radio) radio.checked = true;
+            }
+        }
         
         // Initialize signature canvases
         function initSignatureCanvases() {
@@ -922,13 +1202,42 @@
                 // Touch events for assessor canvas
                 assessorCanvas.addEventListener('touchstart', function(e) {
                     e.preventDefault();
-                    startAssessorDrawing(e.touches[0]);
+                    const touch = e.touches[0];
+                    const rect = assessorCanvas.getBoundingClientRect();
+                    const touchX = touch.clientX - rect.left;
+                    const touchY = touch.clientY - rect.top;
+                    
+                    isAssessorDrawing = true;
+                    lastAssessorX = touchX;
+                    lastAssessorY = touchY;
                 });
+                
                 assessorCanvas.addEventListener('touchmove', function(e) {
                     e.preventDefault();
-                    drawAssessorSignature(e.touches[0]);
+                    if (!isAssessorDrawing) return;
+                    
+                    const touch = e.touches[0];
+                    const rect = assessorCanvas.getBoundingClientRect();
+                    const touchX = touch.clientX - rect.left;
+                    const touchY = touch.clientY - rect.top;
+                    
+                    assessorContext.beginPath();
+                    assessorContext.moveTo(lastAssessorX, lastAssessorY);
+                    assessorContext.lineTo(touchX, touchY);
+                    assessorContext.stroke();
+                    
+                    lastAssessorX = touchX;
+                    lastAssessorY = touchY;
+                    
+                    // Save signature data
+                    document.getElementById('assessorSignatureData').value = assessorCanvas.toDataURL();
+                    autoSave();
                 });
-                assessorCanvas.addEventListener('touchend', stopAssessorDrawing);
+                
+                assessorCanvas.addEventListener('touchend', function(e) {
+                    stopAssessorDrawing();
+                    autoSave();
+                });
             }
             
             // Coordinator signature canvas
@@ -947,13 +1256,42 @@
                 // Touch events for coordinator canvas
                 coordinatorCanvas.addEventListener('touchstart', function(e) {
                     e.preventDefault();
-                    startCoordinatorDrawing(e.touches[0]);
+                    const touch = e.touches[0];
+                    const rect = coordinatorCanvas.getBoundingClientRect();
+                    const touchX = touch.clientX - rect.left;
+                    const touchY = touch.clientY - rect.top;
+                    
+                    isCoordinatorDrawing = true;
+                    lastCoordinatorX = touchX;
+                    lastCoordinatorY = touchY;
                 });
+                
                 coordinatorCanvas.addEventListener('touchmove', function(e) {
                     e.preventDefault();
-                    drawCoordinatorSignature(e.touches[0]);
+                    if (!isCoordinatorDrawing) return;
+                    
+                    const touch = e.touches[0];
+                    const rect = coordinatorCanvas.getBoundingClientRect();
+                    const touchX = touch.clientX - rect.left;
+                    const touchY = touch.clientY - rect.top;
+                    
+                    coordinatorContext.beginPath();
+                    coordinatorContext.moveTo(lastCoordinatorX, lastCoordinatorY);
+                    coordinatorContext.lineTo(touchX, touchY);
+                    coordinatorContext.stroke();
+                    
+                    lastCoordinatorX = touchX;
+                    lastCoordinatorY = touchY;
+                    
+                    // Save signature data
+                    document.getElementById('coordinatorSignatureData').value = coordinatorCanvas.toDataURL();
+                    autoSave();
                 });
-                coordinatorCanvas.addEventListener('touchend', stopCoordinatorDrawing);
+                
+                coordinatorCanvas.addEventListener('touchend', function(e) {
+                    stopCoordinatorDrawing();
+                    autoSave();
+                });
             }
         }
         
@@ -985,12 +1323,16 @@
         }
         
         function stopAssessorDrawing() {
-            isAssessorDrawing = false;
+            if (isAssessorDrawing) {
+                isAssessorDrawing = false;
+                autoSave();
+            }
         }
         
         function clearAssessorSignature() {
             assessorContext.clearRect(0, 0, assessorCanvas.width, assessorCanvas.height);
             document.getElementById('assessorSignatureData').value = '';
+            autoSave();
         }
         
         // Signature functions for Coordinator
@@ -1021,12 +1363,16 @@
         }
         
         function stopCoordinatorDrawing() {
-            isCoordinatorDrawing = false;
+            if (isCoordinatorDrawing) {
+                isCoordinatorDrawing = false;
+                autoSave();
+            }
         }
         
         function clearCoordinatorSignature() {
             coordinatorContext.clearRect(0, 0, coordinatorCanvas.width, coordinatorCanvas.height);
             document.getElementById('coordinatorSignatureData').value = '';
+            autoSave();
         }
         
         // Navigation functions
@@ -1047,6 +1393,9 @@
             // Update progress bar
             updateProgressBar();
             
+            // Save progress
+            autoSave();
+            
             // Scroll to top
             window.scrollTo(0, 0);
         }
@@ -1061,6 +1410,9 @@
             
             // Update progress bar
             updateProgressBar();
+            
+            // Save progress
+            autoSave();
             
             // Scroll to top
             window.scrollTo(0, 0);
@@ -1155,18 +1507,83 @@
             }
         }
         
-        // Submit form
-        function submitForm() {
-            if (!validateSection(8)) {
+        // Get selected radio button value
+        function getSelectedRadioValue(name) {
+            const selectedRadio = document.querySelector(`input[name="${name}"]:checked`);
+            return selectedRadio ? selectedRadio.value : '';
+        }
+        
+        // Finalize the assessment
+        function finalizeSubmission() {
+            if (!validateSection(7)) {
                 alert('Please fill in all required fields before submitting.');
                 return;
             }
             
-            alert('Assessment submitted successfully! Score: ' + document.getElementById('totalScore').textContent);
+            // Show loading spinner
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            loadingSpinner.style.display = 'block';
             
-            // Here you would typically send the form data to a server
-            // For demonstration, we'll just reset and go back to the first section
-            resetForm();
+            // Hide any previous messages
+            const submitMessage = document.getElementById('submitMessage');
+            submitMessage.style.display = 'none';
+            
+            // Collect final data
+            collectFormData();
+            
+            // Mark as complete
+            formData.isComplete = true;
+            formData.completionDate = new Date().toISOString();
+            
+            // Save to Google Sheets
+            sendToGoogleSheet();
+        }
+        
+        // Send data to Google Sheets
+        function sendToGoogleSheet() {
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Success:', data);
+                // Hide loading spinner
+                document.getElementById('loadingSpinner').style.display = 'none';
+                
+                // Show success message
+                const submitMessage = document.getElementById('submitMessage');
+                submitMessage.textContent = 'Assessment submitted successfully! Data has been saved to your Google Sheet.';
+                submitMessage.className = 'message success';
+                submitMessage.style.display = 'block';
+                
+                // Clear localStorage
+                localStorage.removeItem('evosFormData_' + sessionId);
+                
+                // After 3 seconds, reset form for a new assessment
+                setTimeout(() => {
+                    resetForm();
+                }, 3000);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                // Hide loading spinner
+                document.getElementById('loadingSpinner').style.display = 'none';
+                
+                // Show error message
+                const submitMessage = document.getElementById('submitMessage');
+                submitMessage.textContent = 'Error submitting assessment. Please try again.';
+                submitMessage.className = 'message error';
+                submitMessage.style.display = 'block';
+            });
         }
         
         // Reset form to initial state
@@ -1193,6 +1610,12 @@
             if (document.getElementById('scorePercentage')) {
                 document.getElementById('scorePercentage').textContent = '0%';
             }
+            
+            // Hide messages
+            document.getElementById('submitMessage').style.display = 'none';
+            
+            // Generate new session ID
+            sessionId = generateSessionId();
             
             // Scroll to top
             window.scrollTo(0, 0);
